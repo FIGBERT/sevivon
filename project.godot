@@ -18,6 +18,14 @@ _global_script_class_icons={
 config/name="Sevivon"
 config/icon="res://icon.png"
 
+[display]
+
+window/dpi/allow_hidpi=true
+
+[gui]
+
+theme/use_hidpi=true
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
