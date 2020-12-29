@@ -5,4 +5,5 @@ export_presets.cfg
 .mono/
 data_*/
 .DS_Store
+export/
 
