@@ -7,7 +7,7 @@ const MIN_FORCE = 5
 const MAX_FORCE = 12
 var has_spun = false
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var accel = Input.get_accelerometer()
 	if accel.length() > ACCEL_THRESHOLD:
 		randomize()
