@@ -46,18 +46,19 @@ sevivon/
 │  ├─ *.sketch
 ├─ blender/
 │  ├─ *.blend
-├─ scenes/
-│  ├─ example_scene/
-│  │  ├─ *.tscn
-│  │  ├─ *.gltf
-│  │  ├─ *.material
-│  ├─ main.tscn
-├─ scripts/
-│  ├─ *.gd
+├─ godot/
+│  ├─ scenes/
+│  │  ├─ example_scene/
+│  │  │  ├─ *.tscn
+│  │  │  ├─ *.gltf
+│  │  │  ├─ *.material
+│  │  ├─ main.tscn
+│  ├─ scripts/
+│  │  ├─ *.gd
+│  ├─ default_env.tres
+│  ├─ project.godot
 ├─ .gitattributes
 ├─ .gitignore
-├─ default_env.tres
-├─ project.godot
 ├─ COPYING
 ├─ README.md
 ```
@@ -66,12 +67,13 @@ The `assets` directory contains two-dimensional graphics like app
 icons, launch screens, and app previews. The `blender` directory
 contains three-dimensional design files created in [Blender][blend].
 
-The `scenes` directory contains the main scene file and several
-subdirectories. Per the Godot guidelines, files are organized
-"as close to scenes as possible." Certain subdirectories, like
-`sevivon` and `hanukkiah`, contain their own subdirectories to
-organize different in-game skins. The `scripts` directory, as
-the name would imply, contains the project's Godotscript files.
+In the `godot` directory, the `scenes` directory contains the
+main scene file and several subdirectories. Per the Godot guidelines,
+files are organized "as close to scenes as possible." Certain
+subdirectories, like `sevivon` and `hanukkiah`, contain their
+own subdirectories to organize different in-game skins. The
+`scripts` directory, as the name would imply, contains the
+project's Godotscript files.
 
 ## Contributing
 
