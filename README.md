@@ -57,6 +57,7 @@ sevivon/
 │  │  ├─ *.gd
 │  ├─ default_env.tres
 │  ├─ project.godot
+├─ ios/
 ├─ .gitattributes
 ├─ .gitignore
 ├─ COPYING
@@ -74,6 +75,11 @@ subdirectories, like `sevivon` and `hanukkiah`, contain their
 own subdirectories to organize different in-game skins. The
 `scripts` directory, as the name would imply, contains the
 project's Godotscript files.
+
+The `ios` directory contains the exported Godot project for iOS.
+For the time being, the export is still configured for debugging,
+but once a stable release is reached the `ios` folder will become
+optimized and update with each release.
 
 ## Contributing
 
