@@ -1,0 +1,179 @@
+2021-01-02 01:20:41 +0000 [MT] Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x7fdb67db5120; archive(resolved)='<IDEArchive: 0x7fdb67d446e0>', distributionTask(resolved)='2', distributionDestination(resolved)='1', distributionMethod(resolved)='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team(resolved)='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	Chain (13, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0x7fdb67db5120; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	<IDEDistributionProcessingPipelineContext: 0x7fdb67dafd30; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	<IDEDistributionContext: 0x7fdb67db45b0; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	<IDEDistributionContext: 0x7fdb67da5b50; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	<IDEDistributionContext: 0x7fdb67da4400; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	<IDEDistributionContext: 0x7fdb67da2580; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	<IDEDistributionContext: 0x7fdb67d9f1d0; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	<IDEDistributionContext: 0x7fdb67d9dd50; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	<IDEDistributionContext: 0x7fdb67e09420; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='<IDEProvisioningBasicTeam: 0x7fdb67e08f70; teamID='9WHCFZ6J4N', teamName='(null)'>'>
+	<IDEDistributionContext: 0x7fdb640fb090; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='(null)'>
+	<IDEDistributionContext: 0x7fdb62e10560; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='(null)'>
+	<IDEDistributionContext: 0x7fdb64204430; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='<IDEDistributionMethodDevelopmentSigned: 0x7fdb6421c3e0>', team='(null)'>
+	<IDEDistributionContext: 0x7fdb67ca0b90; archive = '<IDEArchive: 0x7fdb67d446e0>', distributionMethod='(null)', team='(null)'>
+</IDEDistributionProcessingPipelineContext: 0x7fdb67db5120>
+2021-01-02 01:20:41 +0000 [MT] Processing step: IDEDistributionCreateDestRootStep
+2021-01-02 01:20:41 +0000 [MT] Processing step: IDEDistributionCopyItemStep
+2021-01-02 01:20:41 +0000 [MT] Running /usr/bin/ditto '-V' '/Users/figbert/code/sevivon/ios/sevivon.xcarchive/Products/Applications/sevivon.app' '/var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Root/Payload/sevivon.app'
+2021-01-02 01:20:41 +0000  >>> Copying /Users/figbert/code/sevivon/ios/sevivon.xcarchive/Products/Applications/sevivon.app 
+2021-01-02 01:20:41 +0000  copying file ./_CodeSignature/CodeResources ... 
+2021-01-02 01:20:41 +0000  7622 bytes for ./_CodeSignature/CodeResources
+2021-01-02 01:20:41 +0000  copying file ./LaunchImage-1100-Portrait-2436h@3x.png ... 
+2021-01-02 01:20:41 +0000  1426 bytes for ./LaunchImage-1100-Portrait-2436h@3x.png
+2021-01-02 01:20:41 +0000  copying file ./en.lproj/InfoPlist.strings ... 
+2021-01-02 01:20:41 +0000  42 bytes for ./en.lproj/InfoPlist.strings
+copying file ./sevivon.pck ... 
+2021-01-02 01:20:42 +0000  298126112 bytes for ./sevivon.pck
+copying file ./AppIcon60x60@2x.png ... 
+2021-01-02 01:20:42 +0000  1096 bytes for ./AppIcon60x60@2x.png
+copying file ./LaunchImage-1100-Landscape-2436h@3x.png ... 
+2021-01-02 01:20:42 +0000  1403 bytes for ./LaunchImage-1100-Landscape-2436h@3x.png
+copying file ./LaunchImage-800-667h@2x.png ... 
+2021-01-02 01:20:42 +0000  514 bytes for ./LaunchImage-800-667h@2x.png
+2021-01-02 01:20:42 +0000  copying file ./AppIcon40x40@3x.png ... 
+2021-01-02 01:20:42 +0000  1096 bytes for ./AppIcon40x40@3x.png
+2021-01-02 01:20:42 +0000  copying file ./sevivon ... 
+2021-01-02 01:20:42 +0000  24310336 bytes for ./sevivon
+copying file ./LaunchImage-700-Portrait~ipad.png ... 
+2021-01-02 01:20:42 +0000  421 bytes for ./LaunchImage-700-Portrait~ipad.png
+copying file ./Assets.car ... 
+2021-01-02 01:20:42 +0000  32568 bytes for ./Assets.car
+2021-01-02 01:20:42 +0000  copying file ./LaunchImage-800-Portrait-736h@3x.png ... 
+2021-01-02 01:20:42 +0000  1429 bytes for ./LaunchImage-800-Portrait-736h@3x.png
+copying file ./LaunchImage-700@2x.png ... 
+2021-01-02 01:20:42 +0000  347 bytes for ./LaunchImage-700@2x.png
+copying file ./LaunchImage-700-568h@2x.png ... 
+2021-01-02 01:20:42 +0000  395 bytes for ./LaunchImage-700-568h@2x.png
+2021-01-02 01:20:42 +0000  copying file ./LaunchImage-700-Landscape@2x~ipad.png ... 
+2021-01-02 01:20:42 +0000  1746 bytes for ./LaunchImage-700-Landscape@2x~ipad.png
+2021-01-02 01:20:42 +0000  copying file ./embedded.mobileprovision ... 
+2021-01-02 01:20:42 +0000  7656 bytes for ./embedded.mobileprovision
+2021-01-02 01:20:42 +0000  copying file ./LaunchImage-800-Landscape-736h@3x.png ... 
+2021-01-02 01:20:42 +0000  1506 bytes for ./LaunchImage-800-Landscape-736h@3x.png
+2021-01-02 01:20:42 +0000  copying file ./LaunchImage-700-Portrait@2x~ipad.png ... 
+2021-01-02 01:20:42 +0000  1615 bytes for ./LaunchImage-700-Portrait@2x~ipad.png
+2021-01-02 01:20:42 +0000  copying file ./LaunchImage-700-Landscape~ipad.png ... 
+2021-01-02 01:20:42 +0000  466 bytes for ./LaunchImage-700-Landscape~ipad.png
+2021-01-02 01:20:42 +0000  copying file ./Info.plist ... 
+2021-01-02 01:20:42 +0000  2099 bytes for ./Info.plist
+2021-01-02 01:20:42 +0000  copying file ./PkgInfo ... 
+2021-01-02 01:20:42 +0000  8 bytes for ./PkgInfo
+2021-01-02 01:20:42 +0000  copying file ./AppIcon76x76~ipad.png ... 
+2021-01-02 01:20:42 +0000  733 bytes for ./AppIcon76x76~ipad.png
+2021-01-02 01:20:42 +0000 [MT] /usr/bin/ditto exited with 0
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionEmbedProfileStep
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionInfoPlistStep
+2021-01-02 01:20:42 +0000 [MT] Skipping step: IDEDistributionInfoPlistStep because it said so
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionAppThinningPlistStep
+2021-01-02 01:20:42 +0000 [MT] Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionCompileBitcodeStep
+2021-01-02 01:20:42 +0000 [MT] Skipping step: IDEDistributionCompileBitcodeStep because it said so
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionCodeSlimmingStep
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionCopyBCSymbolMapsStep
+2021-01-02 01:20:42 +0000 [MT] Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionSymbolsStep
+2021-01-02 01:20:42 +0000 [MT] Skipping step: IDEDistributionSymbolsStep because it said so
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionAppThinningStep
+2021-01-02 01:20:42 +0000 [MT] Skipping step: IDEDistributionAppThinningStep because it said so
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionArchThinningStep
+2021-01-02 01:20:42 +0000 [MT] Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Root/Payload/sevivon.app/sevivon' '-verify_arch' 'arm64e'
+2021-01-02 01:20:42 +0000 [MT] /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2021-01-02 01:20:42 +0000 [MT] Skipping architecture thinning for item "sevivon" because arch "arm64e" wasn't found
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionODRStep
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionStripXattrsStep
+2021-01-02 01:20:42 +0000 [MT] Running /usr/bin/xattr '-crs' '/var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Root/Payload/sevivon.app'
+2021-01-02 01:20:42 +0000 [MT] /usr/bin/xattr exited with 0
+2021-01-02 01:20:42 +0000 [MT] Processing step: IDEDistributionCodesignStep
+2021-01-02 01:20:42 +0000 [MT] Entitlements for <IDEDistributionItem: 0x7fdb67d7d520; bundleID='com.figbertind.sevivon', path='<DVTFilePath:0x7fdb67952280:'/Users/figbert/code/sevivon/ios/sevivon.xcarchive/Products/Applications/sevivon.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x7fdb67e0bcb0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x7fdb67dc6c60; name='Apple Development: Jonathan Welner (LXC22KNPHK)', hash='76261DB9D7CD6E43D9E3E84E8D959B8087ACA79F', serialNumber='<DVTSigningCertificateSerialNumber: 0x7fdb67dc6fb0>', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2020-07-25 06:37:27 +0000''>', entitlements='{
+    "application-identifier" = "9WHCFZ6J4N.com.figbertind.sevivon";
+    "com.apple.developer.team-identifier" = 9WHCFZ6J4N;
+    "get-task-allow" = 1;
+}', teamID='9WHCFZ6J4N', identifier='com.figbertind.sevivon', executablePath='<DVTFilePath:0x7fdb67d65e80:'/Users/figbert/code/sevivon/ios/sevivon.xcarchive/Products/Applications/sevivon.app/sevivon'>', hardenedRuntime='0'>'>: {
+    "application-identifier" = "9WHCFZ6J4N.com.figbertind.sevivon";
+    "com.apple.developer.team-identifier" = 9WHCFZ6J4N;
+    "get-task-allow" = 1;
+}
+2021-01-02 01:20:42 +0000 [MT] Entitlements for <IDEDistributionItem: 0x7fdb67d7d520; bundleID='com.figbertind.sevivon', path='<DVTFilePath:0x7fdb67952280:'/Users/figbert/code/sevivon/ios/sevivon.xcarchive/Products/Applications/sevivon.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x7fdb67e0bcb0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x7fdb67dcd910; name='Apple Development: Jonathan Welner (LXC22KNPHK)', hash='76261DB9D7CD6E43D9E3E84E8D959B8087ACA79F', serialNumber='<DVTSigningCertificateSerialNumber: 0x7fdb67dc8a60>', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2020-07-25 06:37:27 +0000''>', entitlements='{
+    "application-identifier" = "9WHCFZ6J4N.com.figbertind.sevivon";
+    "com.apple.developer.team-identifier" = 9WHCFZ6J4N;
+    "get-task-allow" = 1;
+}', teamID='9WHCFZ6J4N', identifier='com.figbertind.sevivon', executablePath='<DVTFilePath:0x7fdb67d65e80:'/Users/figbert/code/sevivon/ios/sevivon.xcarchive/Products/Applications/sevivon.app/sevivon'>', hardenedRuntime='0'>'> are: {
+    "application-identifier" = "9WHCFZ6J4N.com.figbertind.sevivon";
+    "com.apple.developer.team-identifier" = 9WHCFZ6J4N;
+    "get-task-allow" = 1;
+}
+2021-01-02 01:20:42 +0000 [MT] Writing entitlements for <IDEDistributionItem: 0x7fdb67d7d520; bundleID='com.figbertind.sevivon', path='<DVTFilePath:0x7fdb67952280:'/Users/figbert/code/sevivon/ios/sevivon.xcarchive/Products/Applications/sevivon.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x7fdb67e0bcb0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x7fdb67dd2680; name='Apple Development: Jonathan Welner (LXC22KNPHK)', hash='76261DB9D7CD6E43D9E3E84E8D959B8087ACA79F', serialNumber='<DVTSigningCertificateSerialNumber: 0x7fdb67dcd470>', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2020-07-25 06:37:27 +0000''>', entitlements='{
+    "application-identifier" = "9WHCFZ6J4N.com.figbertind.sevivon";
+    "com.apple.developer.team-identifier" = 9WHCFZ6J4N;
+    "get-task-allow" = 1;
+}', teamID='9WHCFZ6J4N', identifier='com.figbertind.sevivon', executablePath='<DVTFilePath:0x7fdb67d65e80:'/Users/figbert/code/sevivon/ios/sevivon.xcarchive/Products/Applications/sevivon.app/sevivon'>', hardenedRuntime='0'>'> to: /var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/entitlements~~~dSbiJJ
+2021-01-02 01:20:42 +0000 [MT] Running /usr/bin/codesign '-vvv' '--force' '--sign' '76261DB9D7CD6E43D9E3E84E8D959B8087ACA79F' '--entitlements' '/var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/entitlements~~~dSbiJJ' '--preserve-metadata=identifier,flags,runtime' '/var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Root/Payload/sevivon.app'
+2021-01-02 01:20:42 +0000  /var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Root/Payload/sevivon.app: replacing existing signature
+2021-01-02 01:20:43 +0000  /var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Root/Payload/sevivon.app: signed app bundle with Mach-O thin (arm64) [com.figbertind.sevivon]
+2021-01-02 01:20:43 +0000 [MT] /usr/bin/codesign exited with 0
+2021-01-02 01:20:43 +0000 [MT] Processing step: IDEDistributionZipODRItemStep
+2021-01-02 01:20:43 +0000 [MT] Skipping step: IDEDistributionZipODRItemStep because it said so
+2021-01-02 01:20:43 +0000 [MT] Processing step: IDEDistributionCreateIPAStep
+2021-01-02 01:20:43 +0000 [MT] Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Root' '/var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Packages/Sevivon.ipa'
+2021-01-02 01:20:43 +0000  >>> Copying /var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Root 
+2021-01-02 01:20:43 +0000  copying file ./Payload/sevivon.app/_CodeSignature/CodeResources ... 
+2021-01-02 01:20:43 +0000  7622 bytes for ./Payload/sevivon.app/_CodeSignature/CodeResources
+2021-01-02 01:20:43 +0000  copying file ./Payload/sevivon.app/LaunchImage-1100-Portrait-2436h@3x.png ... 
+1426 bytes for ./Payload/sevivon.app/LaunchImage-1100-Portrait-2436h@3x.png
+copying file ./Payload/sevivon.app/en.lproj/InfoPlist.strings ... 
+2021-01-02 01:20:43 +0000  42 bytes for ./Payload/sevivon.app/en.lproj/InfoPlist.strings
+copying file ./Payload/sevivon.app/sevivon.pck ... 
+2021-01-02 01:20:50 +0000  298126112 bytes for ./Payload/sevivon.app/sevivon.pck
+2021-01-02 01:20:50 +0000  copying file ./Payload/sevivon.app/AppIcon60x60@2x.png ... 
+2021-01-02 01:20:50 +0000  1096 bytes for ./Payload/sevivon.app/AppIcon60x60@2x.png
+copying file ./Payload/sevivon.app/LaunchImage-1100-Landscape-2436h@3x.png ... 
+2021-01-02 01:20:50 +0000  1403 bytes for ./Payload/sevivon.app/LaunchImage-1100-Landscape-2436h@3x.png
+copying file ./Payload/sevivon.app/LaunchImage-800-667h@2x.png ... 
+2021-01-02 01:20:50 +0000  514 bytes for ./Payload/sevivon.app/LaunchImage-800-667h@2x.png
+copying file ./Payload/sevivon.app/AppIcon40x40@3x.png ... 
+2021-01-02 01:20:50 +0000  1096 bytes for ./Payload/sevivon.app/AppIcon40x40@3x.png
+copying file ./Payload/sevivon.app/sevivon ... 
+2021-01-02 01:20:51 +0000  24310336 bytes for ./Payload/sevivon.app/sevivon
+copying file ./Payload/sevivon.app/LaunchImage-700-Portrait~ipad.png ... 
+2021-01-02 01:20:51 +0000  421 bytes for ./Payload/sevivon.app/LaunchImage-700-Portrait~ipad.png
+copying file ./Payload/sevivon.app/Assets.car ... 
+2021-01-02 01:20:51 +0000  32568 bytes for ./Payload/sevivon.app/Assets.car
+copying file ./Payload/sevivon.app/LaunchImage-800-Portrait-736h@3x.png ... 
+2021-01-02 01:20:51 +0000  1429 bytes for ./Payload/sevivon.app/LaunchImage-800-Portrait-736h@3x.png
+copying file ./Payload/sevivon.app/LaunchImage-700@2x.png ... 
+2021-01-02 01:20:51 +0000  347 bytes for ./Payload/sevivon.app/LaunchImage-700@2x.png
+copying file ./Payload/sevivon.app/LaunchImage-700-568h@2x.png ... 
+2021-01-02 01:20:51 +0000  395 bytes for ./Payload/sevivon.app/LaunchImage-700-568h@2x.png
+copying file ./Payload/sevivon.app/LaunchImage-700-Landscape@2x~ipad.png ... 
+2021-01-02 01:20:51 +0000  1746 bytes for ./Payload/sevivon.app/LaunchImage-700-Landscape@2x~ipad.png
+copying file ./Payload/sevivon.app/embedded.mobileprovision ... 
+2021-01-02 01:20:51 +0000  7656 bytes for ./Payload/sevivon.app/embedded.mobileprovision
+copying file ./Payload/sevivon.app/LaunchImage-800-Landscape-736h@3x.png ... 
+2021-01-02 01:20:51 +0000  1506 bytes for ./Payload/sevivon.app/LaunchImage-800-Landscape-736h@3x.png
+2021-01-02 01:20:51 +0000  copying file ./Payload/sevivon.app/LaunchImage-700-Portrait@2x~ipad.png ... 
+2021-01-02 01:20:51 +0000  1615 bytes for ./Payload/sevivon.app/LaunchImage-700-Portrait@2x~ipad.png
+copying file ./Payload/sevivon.app/LaunchImage-700-Landscape~ipad.png ... 
+2021-01-02 01:20:51 +0000  466 bytes for ./Payload/sevivon.app/LaunchImage-700-Landscape~ipad.png
+2021-01-02 01:20:51 +0000  copying file ./Payload/sevivon.app/Info.plist ... 
+2021-01-02 01:20:51 +0000  2099 bytes for ./Payload/sevivon.app/Info.plist
+copying file ./Payload/sevivon.app/PkgInfo ... 
+2021-01-02 01:20:51 +0000  8 bytes for ./Payload/sevivon.app/PkgInfo
+copying file ./Payload/sevivon.app/AppIcon76x76~ipad.png ... 
+2021-01-02 01:20:51 +0000  733 bytes for ./Payload/sevivon.app/AppIcon76x76~ipad.png
+2021-01-02 01:20:51 +0000 [MT] /usr/bin/ditto exited with 0
+2021-01-02 01:20:51 +0000 [MT] Processing step: IDEDistributionAppStoreInformationStep
+2021-01-02 01:20:51 +0000 [MT] Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2021-01-02 01:20:51 +0000 [MT] Processing step: IDEDistributionGenerateProcessedDistributionItems
+2021-01-02 01:20:51 +0000 [MT] IDEDistributionItem init <DVTFilePath:0x7fdb67c2bba0:'/var/folders/h9/qbh1mhf937b6kfs3xxlpkck80000gn/T/XcodeDistPipeline.~~~yOLXCu/Root/Payload/sevivon.app'>
+2021-01-02 01:20:51 +0000 [MT] Processing step: IDEDistributionCreateManifestStep

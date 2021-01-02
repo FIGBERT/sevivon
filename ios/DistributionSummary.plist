@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Sevivon.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>76261DB9D7CD6E43D9E3E84E8D959B8087ACA79F</string>
+				<key>dateExpires</key>
+				<string>7/24/21</string>
+				<key>type</key>
+				<string>Apple Development</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>9WHCFZ6J4N.com.figbertind.sevivon</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>9WHCFZ6J4N</string>
+				<key>get-task-allow</key>
+				<true/>
+			</dict>
+			<key>name</key>
+			<string>sevivon.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>afccbdf9-4037-48cd-a86e-513c5c0e39aa</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: com.figbertind.sevivon</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>9WHCFZ6J4N</string>
+				<key>name</key>
+				<string></string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

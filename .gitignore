@@ -2,7 +2,11 @@
 export.cfg
 export_presets.cfg
 *.translation
-.mono/
-data_*/
 .DS_Store
+xcuserdata/
+*.xcarchive/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
 
