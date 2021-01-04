@@ -1,14 +1,14 @@
 extends RigidBody
 
-const ACCEL_THRESHOLD = 3
-const MIN_ANGLE = 0.0
-const MAX_ANGLE = 0.1
-const MIN_FORCE = 5
-const MAX_FORCE = 12
-var has_spun = false
+const ACCEL_THRESHOLD := 3
+const MIN_ANGLE := 0.0
+const MAX_ANGLE := 0.1
+const MIN_FORCE := 5
+const MAX_FORCE := 12
+var has_spun := false
 
 func _physics_process(_delta):
-	var accel = Input.get_accelerometer()
+	var accel := Input.get_accelerometer()
 	if accel.length() > ACCEL_THRESHOLD:
 		spin(accel)
 
