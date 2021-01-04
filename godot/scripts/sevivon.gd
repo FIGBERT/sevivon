@@ -12,7 +12,7 @@ func _physics_process(_delta):
 	var accel := Input.get_accelerometer()
 	if accel.length() > ACCEL_THRESHOLD:
 		spin(accel)
-	elif has_spun && !displayed_results && angular_velocity == Vector3.ZERO:
+	elif has_spun && !displayed_results && is_zero_approx(angular_velocity.length()):
 		print(spin_result())
 		displayed_results = true
 	elif displayed_results:
