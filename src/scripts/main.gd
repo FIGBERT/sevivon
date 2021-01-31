@@ -7,34 +7,38 @@ const MAX_PLAYERS := 5
 
 
 func _ready() -> void:
-	if "--server" in OS.get_cmdline_args() or OS.has_feature("Server"):
-		_initalize_server()
-		get_tree().connect("network_peer_connected", self, "_client_joined")
-		get_tree().connect("network_peer_disconnected", self, "_client_left")
+	_initalize_instance()
+
+
+func _initalize_instance() -> void:
+	var is_server := "--server" in OS.get_cmdline_args() or OS.has_feature("Server")
+	
+	var peer := NetworkedMultiplayerENet.new()
+	if is_server:
+		peer.create_server(SERVER_PORT, MAX_PLAYERS)
 	else:
-		_initialize_client()
+		peer.create_client(SERVER_IP, SERVER_PORT)
+	get_tree().network_peer = peer
+	
+	if not is_server:
 		get_tree().connect("connected_to_server", self, "_connected_successfully")
 		get_tree().connect("connection_failed", self, "_connection_failed")
+	get_tree().connect("network_peer_connected", self, "_client_joined")
+	get_tree().connect("network_peer_disconnected", self, "_client_left")
 
 
-func _initalize_server() -> void:
-	var peer := NetworkedMultiplayerENet.new()
-	peer.create_server(SERVER_PORT, MAX_PLAYERS)
-	get_tree().network_peer = peer
+func _peer_joined(id: int) -> void:
+	if get_tree().is_network_server():
+		print("%s joined successfully" % id)
+	elif id != get_tree().get_network_unique_id():
+		$Label.text += "%s has joined the lobby" % id
 
 
-func _initialize_client() -> void:
-	var peer := NetworkedMultiplayerENet.new()
-	peer.create_client(SERVER_IP, SERVER_PORT)
-	get_tree().network_peer = peer
-
-
-func _client_joined(id: int) -> void:
-	print("%s joined successfully" % id)
-
-
-func _client_left(id: int) -> void:
-	print("%s disconnected from the server" % id)
+func _peer_left(id: int) -> void:
+	if get_tree().is_network_server():
+		print("%s disconnected from the server" % id)
+	elif id != get_tree().get_network_unique_id():
+		$Label.text += "%s has left the lobby" % id
 
 
 func _connected_successfully() -> void:
