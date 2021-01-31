@@ -3,7 +3,7 @@ extends Node
 
 const SERVER_IP := "10.0.0.76"
 const SERVER_PORT := 1780
-const MAX_PLAYERS := 5
+const MAX_PLAYERS := 2
 
 
 func _ready() -> void:
