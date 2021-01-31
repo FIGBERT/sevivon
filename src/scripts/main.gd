@@ -31,19 +31,19 @@ func _peer_joined(id: int) -> void:
 	if get_tree().is_network_server():
 		print("%s joined successfully" % id)
 	elif id != get_tree().get_network_unique_id():
-		$Label.text += "%s has joined the lobby" % id
+		$Label.text += "%s has joined the lobby\n" % id
 
 
 func _peer_left(id: int) -> void:
 	if get_tree().is_network_server():
 		print("%s disconnected from the server" % id)
 	elif id != get_tree().get_network_unique_id():
-		$Label.text += "%s has left the lobby" % id
+		$Label.text += "%s has left the lobby\n" % id
 
 
 func _connected_successfully() -> void:
-	$Label.text += "Connection to server established."
+	$Label.text += "Connection to server established.\n"
 
 
 func _connection_failed() -> void:
-	$Label.text += "Could not connect to server."
+	$Label.text += "Could not connect to server.\n"
