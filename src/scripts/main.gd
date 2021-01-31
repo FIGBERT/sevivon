@@ -38,8 +38,8 @@ func _client_left(id: int) -> void:
 
 
 func _connected_successfully() -> void:
-	print("Connection to server established.")
+	$Label.text += "Connection to server established."
 
 
 func _connection_failed() -> void:
-	print("Could not connect to server.")
+	$Label.text += "Could not connect to server."
