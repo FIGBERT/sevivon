@@ -23,8 +23,8 @@ func _initalize_instance() -> void:
 	if not is_server:
 		get_tree().connect("connected_to_server", self, "_connected_successfully")
 		get_tree().connect("connection_failed", self, "_connection_failed")
-	get_tree().connect("network_peer_connected", self, "_client_joined")
-	get_tree().connect("network_peer_disconnected", self, "_client_left")
+	get_tree().connect("network_peer_connected", self, "_peer_joined")
+	get_tree().connect("network_peer_disconnected", self, "_peer_left")
 
 
 func _peer_joined(id: int) -> void:
