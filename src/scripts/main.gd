@@ -40,7 +40,7 @@ func _initialize_client() -> void:
 
 
 func _client_connected_successfully() -> void:
-	$Label.text += "Connection to server established.\n"
+	$Label.text += "Connection to server established as %s.\n" % get_tree().get_network_unique_id()
 
 
 func _client_connection_failed() -> void:
