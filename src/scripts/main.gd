@@ -7,43 +7,40 @@ const MAX_PLAYERS := 2
 
 
 func _ready() -> void:
-	_initalize_instance()
-
-
-func _initalize_instance() -> void:
-	var is_server := "--server" in OS.get_cmdline_args() or OS.has_feature("Server")
-	
-	var peer := NetworkedMultiplayerENet.new()
-	if is_server:
-		peer.create_server(SERVER_PORT, MAX_PLAYERS)
+	if "--server" in OS.get_cmdline_args() or OS.has_feature("Server"):
+		_initialize_server()
 	else:
-		peer.create_client(SERVER_IP, SERVER_PORT)
+		_initialize_client()
+
+
+## Server Logic
+func _initialize_server() -> void:
+	var peer := NetworkedMultiplayerENet.new()
+	peer.create_server(SERVER_PORT, MAX_PLAYERS)
 	get_tree().network_peer = peer
-	
-	if not is_server:
-		get_tree().connect("connected_to_server", self, "_connected_successfully")
-		get_tree().connect("connection_failed", self, "_connection_failed")
-	get_tree().connect("network_peer_connected", self, "_peer_joined")
-	get_tree().connect("network_peer_disconnected", self, "_peer_left")
+	get_tree().connect("network_peer_connected", self, "_client_joined_server")
+	get_tree().connect("network_peer_disconnected", self, "_client_left_server")
 
 
-func _peer_joined(id: int) -> void:
-	if get_tree().is_network_server():
-		print("%s joined successfully" % id)
-	elif id != 1:
-		$Label.text += "%s has joined the lobby\n" % id
+func _client_joined_server(id: int) -> void:
+	print("%s joined successfully" % id)
 
 
-func _peer_left(id: int) -> void:
-	if get_tree().is_network_server():
-		print("%s disconnected from the server" % id)
-	elif id != 1:
-		$Label.text += "%s has left the lobby\n" % id
+func _client_left_server(id: int) -> void:
+	print("%s disconnected from the server" % id)
 
 
-func _connected_successfully() -> void:
+## Client Logic
+func _initialize_client() -> void:
+	var peer := NetworkedMultiplayerENet.new()
+	peer.create_client(SERVER_IP, SERVER_PORT)
+	get_tree().network_peer = peer
+	get_tree().connect("connected_to_server", self, "_client_connected_successfully")
+	get_tree().connect("connection_failed", self, "_client_connection_failed")
+
+func _client_connected_successfully() -> void:
 	$Label.text += "Connection to server established.\n"
 
 
-func _connection_failed() -> void:
+func _client_connection_failed() -> void:
 	$Label.text += "Could not connect to server.\n"
