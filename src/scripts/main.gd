@@ -38,6 +38,7 @@ func _initialize_client() -> void:
 	get_tree().connect("connected_to_server", self, "_client_connected_successfully")
 	get_tree().connect("connection_failed", self, "_client_connection_failed")
 
+
 func _client_connected_successfully() -> void:
 	$Label.text += "Connection to server established.\n"
 
