@@ -28,10 +28,10 @@ func _client_joined_server(id: int) -> void:
 	if players.size() > 0:
 		var peers := _join_array(players.keys(), "\n    ")
 		var message: String = "Some players are already here:\n    %s\n" % peers
-		rpc_id(id, "_print_message_from_server", message)
+		rpc_id(id, "print_message_from_server", message)
 	for player in players:
 		var message := "%s has joined the server!\n" % id
-		rpc_id(player, "_print_message_from_server", message)
+		rpc_id(player, "print_message_from_server", message)
 	players[id] = { "gelt": 10 }
 
 
@@ -40,7 +40,7 @@ func _client_left_server(id: int) -> void:
 	players.erase(id)
 	for player in players:
 		var message := "%s has left the server.\n" % id
-		rpc_id(player, "_print_message_from_server", message)
+		rpc_id(player, "print_message_from_server", message)
 
 
 ## Client Logic
@@ -60,7 +60,7 @@ func _client_connection_failed() -> void:
 	$Label.text += "Could not connect to server.\n"
 
 
-remote func _print_message_from_server(message: String) -> void:
+remote func print_message_from_server(message: String) -> void:
 	$Label.text += message
 
 
