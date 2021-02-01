@@ -4,6 +4,7 @@ extends Node
 const SERVER_IP := "10.0.0.76"
 const SERVER_PORT := 1780
 const MAX_PLAYERS := 2
+var players := {}
 
 
 func _ready() -> void:
@@ -24,10 +25,22 @@ func _initialize_server() -> void:
 
 func _client_joined_server(id: int) -> void:
 	print("%s joined successfully" % id)
+	if players.size() > 0:
+		var peers := _join_array(players.keys(), "\n    ")
+		var message: String = "Some players are already here:\n    %s\n" % peers
+		rpc_id(id, "_print_message_from_server", message)
+	for player in players:
+		var message := "%s has joined the server!\n" % id
+		rpc_id(player, "_print_message_from_server", message)
+	players[id] = { "gelt": 10 }
 
 
 func _client_left_server(id: int) -> void:
 	print("%s disconnected from the server" % id)
+	players.erase(id)
+	for player in players:
+		var message := "%s has left the server.\n" % id
+		rpc_id(player, "_print_message_from_server", message)
 
 
 ## Client Logic
@@ -45,3 +58,16 @@ func _client_connected_successfully() -> void:
 
 func _client_connection_failed() -> void:
 	$Label.text += "Could not connect to server.\n"
+
+
+remote func _print_message_from_server(message: String) -> void:
+	$Label.text += message
+
+
+## Utility Functions
+func _join_array(array: Array, delimiter: String = "") -> String:
+	var joined_string = ""
+	for item in array.slice(0, -2):
+		joined_string += "%s%s" % [item, delimiter]
+	joined_string += str(array[-1])
+	return joined_string
