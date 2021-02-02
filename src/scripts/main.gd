@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 		if players.size() == MAX_PLAYERS and not game_started:
 			_start_game()
 		elif players.size() != MAX_PLAYERS and game_started:
-			rpc("print_message_from_server", "Missing players! Stopping the game...\n")
+			rpc("print_message_from_server", "Missing players! Stopping the game...")
 			_end_game()
 	else:
 		if game_started and current_turn["id"] == get_tree().get_network_unique_id():
@@ -42,10 +42,10 @@ func _client_joined_server(id: int) -> void:
 	print("%s joined successfully" % id)
 	if players.size() > 0:
 		var peers := _join_array(players.keys(), "\n    ")
-		var message: String = "Some players are already here:\n    %s\n" % peers
+		var message: String = "Some players are already here:\n    %s" % peers
 		rpc_id(id, "print_message_from_server", message)
 	for player in players:
-		var message := "%s has joined the server!\n" % id
+		var message := "%s has joined the server!" % id
 		rpc_id(player, "print_message_from_server", message)
 	players[id] = { "gelt": 10 }
 
@@ -54,16 +54,16 @@ func _client_left_server(id: int) -> void:
 	print("%s disconnected from the server" % id)
 	players.erase(id)
 	for player in players:
-		var message := "%s has left the server.\n" % id
+		var message := "%s has left the server." % id
 		rpc_id(player, "print_message_from_server", message)
 
 
 func _start_game() -> void:
 	get_tree().set_refuse_new_network_connections(true)
 	rset("game_started", true)
-	rpc("print_message_from_server", "The game has begun!\n")
+	rpc("print_message_from_server", "The game has begun!")
 	rset("current_turn", { "id": players.keys()[0], "index": 0 })
-	rpc("print_message_from_server", "It's %s's turn\n" % current_turn["id"])
+	rpc("print_message_from_server", "It's %s's turn" % current_turn["id"])
 
 
 func _end_game() -> void:
@@ -79,14 +79,14 @@ func _iterate_turn() -> void:
 	else:
 		index = current_turn["index"] + 1
 	rset("current_turn", { "id": players.keys()[index], "index": index })
-	rpc("print_message_from_server", "It's now %s's turn\n" % current_turn["id"])
+	rpc("print_message_from_server", "It's now %s's turn" % current_turn["id"])
 
 
 remote func client_spun() -> void:
 	var sender = get_tree().get_rpc_sender_id()
 	if sender != current_turn["id"]:
 		return
-	rpc("print_message_from_server", "%s has spun the dreidel\n" % current_turn["id"])
+	rpc("print_message_from_server", "%s has spun the dreidel" % current_turn["id"])
 	# Pick random result and adjust gelt accordingly
 	_iterate_turn()
 
@@ -115,7 +115,7 @@ func _check_for_spin() -> void:
 
 
 remote func print_message_from_server(message: String) -> void:
-	$Label.text += message
+	$Label.text += message + "\n"
 
 
 ## Utility Functions
