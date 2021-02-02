@@ -1,10 +1,13 @@
 extends Node
 
 
+const ACCEL_THRESHOLD := 3
 const SERVER_IP := "10.0.0.76"
 const SERVER_PORT := 1780
 const MAX_PLAYERS := 2
 var players := {}
+remotesync var game_started := false
+remotesync var current_turn := { "id": -1, "index": -1 }
 
 
 func _ready() -> void:
@@ -12,6 +15,18 @@ func _ready() -> void:
 		_initialize_server()
 	else:
 		_initialize_client()
+
+
+func _process(delta: float) -> void:
+	if "--server" in OS.get_cmdline_args() or OS.has_feature("Server"):
+		if players.size() == MAX_PLAYERS and not game_started:
+			_start_game()
+		elif players.size() != MAX_PLAYERS and game_started:
+			rpc("print_message_from_server", "Missing players! Stopping the game...\n")
+			_end_game()
+	else:
+		if game_started and current_turn["id"] == get_tree().get_network_unique_id():
+			_check_for_spin()
 
 
 ## Server Logic
@@ -43,6 +58,39 @@ func _client_left_server(id: int) -> void:
 		rpc_id(player, "print_message_from_server", message)
 
 
+func _start_game() -> void:
+	get_tree().set_refuse_new_network_connections(true)
+	rset("game_started", true)
+	rpc("print_message_from_server", "The game has begun!\n")
+	rset("current_turn", { "id": players.keys()[0], "index": 0 })
+	rpc("print_message_from_server", "It's %s's turn\n" % current_turn["id"])
+
+
+func _end_game() -> void:
+	get_tree().set_refuse_new_network_connections(false)
+	rset("game_started", false)
+	rset("current_turn", { "id": -1, "index": -1 })
+
+
+func _iterate_turn() -> void:
+	var index: int
+	if current_turn["index"] == players.size() - 1:
+		index = 0
+	else:
+		index = current_turn["index"] + 1
+	rset("current_turn", { "id": players.keys()[index], "index": index })
+	rpc("print_message_from_server", "It's now %s's turn\n" % current_turn["id"])
+
+
+remote func client_spun() -> void:
+	var sender = get_tree().get_rpc_sender_id()
+	if sender != current_turn["id"]:
+		return
+	rpc("print_message_from_server", "%s has spun the dreidel\n" % current_turn["id"])
+	# Pick random result and adjust gelt accordingly
+	_iterate_turn()
+
+
 ## Client Logic
 func _initialize_client() -> void:
 	var peer := NetworkedMultiplayerENet.new()
@@ -58,6 +106,12 @@ func _client_connected_successfully() -> void:
 
 func _client_connection_failed() -> void:
 	$Label.text += "Could not connect to server.\n"
+
+
+func _check_for_spin() -> void:
+	var accel := Input.get_accelerometer()
+	if accel.length() > ACCEL_THRESHOLD:
+		rpc_id(1, "client_spun")
 
 
 remote func print_message_from_server(message: String) -> void:
