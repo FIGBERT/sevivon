@@ -5,7 +5,9 @@ const ACCEL_THRESHOLD := 3
 const SERVER_IP := "10.0.0.76"
 const SERVER_PORT := 1780
 const MAX_PLAYERS := 2
+const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
 var players := {}
+var pot := 5
 remotesync var game_started := false
 remotesync var current_turn := { "id": -1, "index": -1 }
 
@@ -64,6 +66,7 @@ func _start_game() -> void:
 	rpc("print_message_from_server", "The game has begun!")
 	rset("current_turn", { "id": players.keys()[0], "index": 0 })
 	rpc("print_message_from_server", "It's %s's turn" % current_turn["id"])
+	rpc("print_message_from_server", _gelt_status())
 
 
 func _end_game() -> void:
@@ -82,12 +85,46 @@ func _iterate_turn() -> void:
 	rpc("print_message_from_server", "It's now %s's turn" % current_turn["id"])
 
 
+func _gelt_status() -> String:
+	var message := "Current gelt status:\n    Pot: %s\n" % pot
+	for id in players.keys():
+		message += "    %s: %s\n" % [id, players[id]["gelt"]]
+	return message
+
+
+func _spin_dreidel(id: int) -> void:
+	randomize()
+	var spin: int = floor(rand_range(0, 4))
+	var result: String = DREIDEL_FACES[spin]
+	rpc("print_message_from_server", "%s landed on %s!" % [id, result])
+	match(spin):
+		1: # gimel
+			players[id]["gelt"] += pot
+			pot = 0
+			_everyone_puts_in_one()
+		2: # hey
+			players[id]["gelt"] += floor(pot / 2)
+			pot -= floor(pot / 2)
+			if pot == 1:
+				_everyone_puts_in_one()
+		3: # shin
+			players[id]["gelt"] -= 1
+			pot += 1
+
+
+func _everyone_puts_in_one() -> void:
+	for id in players.keys():
+		players[id]["gelt"] -= 1
+		pot += 1
+
+
 remote func client_spun() -> void:
-	var sender = get_tree().get_rpc_sender_id()
+	var sender := get_tree().get_rpc_sender_id()
 	if sender != current_turn["id"]:
 		return
-	rpc("print_message_from_server", "%s has spun the dreidel" % current_turn["id"])
-	# Pick random result and adjust gelt accordingly
+	rpc("print_message_from_server", "%s has spun the dreidel..." % sender)
+	_spin_dreidel(sender)
+	rpc("print_message_from_server", _gelt_status())
 	_iterate_turn()
 
 
