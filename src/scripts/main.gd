@@ -74,6 +74,10 @@ func _end_game(message: String, over := false) -> void:
 	rset("game_started", false)
 	rset("game_over", over)
 	rset("current_turn", { "id": -1, "index": -1 })
+	for id in players.keys():
+		players[id]["gelt"] = 10
+		players[id]["out"] = false
+	pot = 5
 	rpc("print_message_from_server", message)
 
 
