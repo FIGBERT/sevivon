@@ -25,7 +25,8 @@ func _process(delta: float) -> void:
 		if players.size() == MAX_PLAYERS and not game_started and not game_over:
 			_start_game()
 		elif players.size() != MAX_PLAYERS and game_started and not game_over:
-			_end_game("Missing players! Stopping the game...")
+			rpc("print_message_from_server", "Missing players! Stopping the game...")
+			_end_game()
 	else:
 		if game_started and current_turn["id"] == get_tree().get_network_unique_id():
 			_check_for_spin()
@@ -49,7 +50,7 @@ func _client_joined_server(id: int) -> void:
 	for player in players:
 		var message := "%s has joined the server!" % id
 		rpc_id(player, "print_message_from_server", message)
-	players[id] = { "gelt": 10, "out": false }
+	players[id] = { "gelt": 10, "in": true }
 
 
 func _client_left_server(id: int) -> void:
@@ -98,10 +99,10 @@ func _iterate_turn() -> void:
 		index = 0
 	else:
 		index = current_turn["index"] + 1
-	var id = players.keys()[index]
-	if players[id]["out"]:
+	if not players[players.keys()[index]]["in"]:
+		current_turn = { "id": players.keys()[index], "index": index }
 		_iterate_turn()
-	rset("current_turn", { "id": id, "index": index })
+	rset("current_turn", { "id": players.keys()[index], "index": index })
 	rpc("print_message_from_server", "It's now %s's turn" % current_turn["id"])
 
 
@@ -127,21 +128,39 @@ func _spin_dreidel(id: int) -> void:
 			pot -= floor(pot / 2)
 			if pot == 1:
 				_everyone_puts_in_one()
-		3: # pey/shin
-			if players[id]["gelt"] != 0:
+		3: # shin
+			if players[id]["gelt"] > 0:
 				players[id]["gelt"] -= 1
 				pot += 1
 			else:
-				players[id]["out"] = true
+				rpc("print_message_from_server", "%s can't pay – you lose!" % id)
+				players[id]["in"] = false
 
 
 func _everyone_puts_in_one() -> void:
 	for id in players.keys():
-		if players[id]["gelt"] != 0:
+		if not players[id]["in"]:
+			continue
+		if players[id]["gelt"] > 0:
 			players[id]["gelt"] -= 1
 			pot += 1
 		else:
-			players[id]["out"] = true
+			rpc("print_message_from_server", "%s can't pay the ante – you lose!" % id)
+			players[id]["in"] = false
+
+
+func _check_for_winner() -> bool:
+	var sum := 0
+	for id in players.keys():
+		sum += int(players[id]["in"])
+	return true if sum == 1 else false
+
+
+func _find_winner() -> int:
+	for id in players.keys():
+		if players[id]["in"]:
+			return id
+	return -1
 
 
 remote func client_spun() -> void:
@@ -150,11 +169,14 @@ remote func client_spun() -> void:
 		return
 	rpc("print_message_from_server", "%s has spun the dreidel..." % sender)
 	_spin_dreidel(sender)
-	rpc("print_message_from_server", _gelt_status())
-	var winner = _check_for_winner()
-	if winner > -1:
-		_end_game("%s has won the game! Congratulations!", true)
+	var has_won := _check_for_winner()
+	if has_won:
+		var winner := _find_winner()
+		rpc("print_message_from_server", "We have a winner! Congratulations, %s!" % winner)
+		rset("game_over", true)
+		_end_game()
 	else:
+		rpc("print_message_from_server", _gelt_status())
 		_iterate_turn()
 
 
