@@ -123,7 +123,7 @@ func _spin_dreidel(id: int) -> void:
 			pot -= floor(pot / 2)
 			if pot == 1:
 				_everyone_puts_in_one()
-		3: # shin
+		3: # pey/shin
 			if players[id]["gelt"] != 0:
 				players[id]["gelt"] -= 1
 				pot += 1
