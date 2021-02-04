@@ -25,8 +25,7 @@ func _process(delta: float) -> void:
 		if players.size() == MAX_PLAYERS and not game_started and not game_over:
 			_start_game()
 		elif players.size() != MAX_PLAYERS and game_started and not game_over:
-			rpc("print_message_from_server", "Missing players! Stopping the game...")
-			_end_game()
+			_end_game("Missing players! Stopping the game...")
 	else:
 		if game_started and current_turn["id"] == get_tree().get_network_unique_id():
 			_check_for_spin()
@@ -77,20 +76,9 @@ func _end_game(message: String, over := false) -> void:
 	rset("current_turn", { "id": -1, "index": -1 })
 	for id in players.keys():
 		players[id]["gelt"] = 10
-		players[id]["out"] = false
+		players[id]["in"] = true
 	pot = 5
 	rpc("print_message_from_server", message)
-
-
-func _check_for_winner() -> int:
-	var winner: int
-	for id in players.keys():
-		if not players[id]["out"]:
-			if winner == null:
-				winner = id
-			elif winner != -1:
-				winner = -1
-	return winner
 
 
 func _iterate_turn() -> void:
@@ -172,9 +160,7 @@ remote func client_spun() -> void:
 	var has_won := _check_for_winner()
 	if has_won:
 		var winner := _find_winner()
-		rpc("print_message_from_server", "We have a winner! Congratulations, %s!" % winner)
-		rset("game_over", true)
-		_end_game()
+		_end_game("We have a winner! Congratulations, %s!" % winner, true)
 	else:
 		rpc("print_message_from_server", _gelt_status())
 		_iterate_turn()
