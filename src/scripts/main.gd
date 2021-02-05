@@ -6,8 +6,10 @@ const SERVER_IP := "10.0.0.76"
 const SERVER_PORT := 1780
 const MAX_PLAYERS := 2
 const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
+const POT_STARTING_GELT := 5
+const PLAYER_STARTING_GELT := 10
 var players := {}
-var pot := 5
+var pot := POT_STARTING_GELT
 var spin_results := {
 	"nun": 0,
 	"gimmel": 0,
@@ -55,7 +57,7 @@ func _client_joined_server(id: int) -> void:
 	for player in players:
 		var message := "%s has joined the server!" % id
 		rpc_id(player, "print_message_from_server", message)
-	players[id] = { "gelt": 10, "in": true }
+	players[id] = { "gelt": PLAYER_STARTING_GELT, "in": true }
 
 
 func _client_left_server(id: int) -> void:
@@ -81,9 +83,9 @@ func _end_game(message: String, over := false) -> void:
 	rset("game_over", over)
 	rset("current_turn", { "id": -1, "index": -1 })
 	for id in players.keys():
-		players[id]["gelt"] = 10
+		players[id]["gelt"] = PLAYER_STARTING_GELT
 		players[id]["in"] = true
-	pot = 5
+	pot = POT_STARTING_GELT
 	rpc("print_message_from_server", message)
 	print(_spin_statistics())
 
