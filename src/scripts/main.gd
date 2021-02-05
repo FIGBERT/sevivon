@@ -48,6 +48,7 @@ func _initialize_server() -> void:
 	get_tree().connect("network_peer_disconnected", self, "_client_left_server")
 
 
+### Network Peer Signals
 func _client_joined_server(id: int) -> void:
 	print("%s joined successfully" % id)
 	if players.size() > 0:
@@ -68,6 +69,7 @@ func _client_left_server(id: int) -> void:
 		rpc_id(player, "print_message_from_server", message)
 
 
+### Game Phases
 func _start_game() -> void:
 	get_tree().set_refuse_new_network_connections(true)
 	rset("game_started", true)
@@ -89,37 +91,20 @@ func _end_game(message: String, over := false) -> void:
 	rpc("print_message_from_server", message)
 	print(_spin_statistics())
 
-
-func _spin_statistics() -> String:
-	var _str := "Dreidel spin statistics:\n"
-	var sum: float = 0
-	for count in spin_results.values():
-		sum += count
-	for category in spin_results.keys():
-		var result: float = spin_results[category]
-		var percentage: float = stepify(result / sum, 0.01)
-		_str += "    %s: %s (%s)\n" % [category, result, percentage]
-	return _str
-
-
-func _iterate_turn() -> void:
-	var index: int
-	if current_turn["index"] == players.size() - 1:
-		index = 0
+### Dreidel Actions
+remote func client_spun() -> void:
+	var sender := get_tree().get_rpc_sender_id()
+	if sender != current_turn["id"]:
+		return
+	rpc("print_message_from_server", "%s has spun the dreidel..." % sender)
+	_spin_dreidel(sender)
+	var has_won := _check_for_winner()
+	if has_won:
+		var winner := _find_winner()
+		_end_game("We have a winner! Congratulations, %s!" % winner, true)
 	else:
-		index = current_turn["index"] + 1
-	if not players[players.keys()[index]]["in"]:
-		current_turn = { "id": players.keys()[index], "index": index }
+		rpc("print_message_from_server", _gelt_status())
 		_iterate_turn()
-	rset("current_turn", { "id": players.keys()[index], "index": index })
-	rpc("print_message_from_server", "It's now %s's turn" % current_turn["id"])
-
-
-func _gelt_status() -> String:
-	var message := "Current gelt status:\n    Pot: %s\n" % pot
-	for id in players.keys():
-		message += "    %s: %s\n" % [id, players[id]["gelt"]]
-	return message
 
 
 func _spin_dreidel(id: int) -> void:
@@ -163,6 +148,20 @@ func _everyone_puts_in_one() -> void:
 			players[id]["in"] = false
 
 
+func _iterate_turn() -> void:
+	var index: int
+	if current_turn["index"] == players.size() - 1:
+		index = 0
+	else:
+		index = current_turn["index"] + 1
+	if not players[players.keys()[index]]["in"]:
+		current_turn = { "id": players.keys()[index], "index": index }
+		_iterate_turn()
+	rset("current_turn", { "id": players.keys()[index], "index": index })
+	rpc("print_message_from_server", "It's now %s's turn" % current_turn["id"])
+
+
+### Winner
 func _check_for_winner() -> bool:
 	var sum := 0
 	for id in players.keys():
@@ -177,19 +176,24 @@ func _find_winner() -> int:
 	return -1
 
 
-remote func client_spun() -> void:
-	var sender := get_tree().get_rpc_sender_id()
-	if sender != current_turn["id"]:
-		return
-	rpc("print_message_from_server", "%s has spun the dreidel..." % sender)
-	_spin_dreidel(sender)
-	var has_won := _check_for_winner()
-	if has_won:
-		var winner := _find_winner()
-		_end_game("We have a winner! Congratulations, %s!" % winner, true)
-	else:
-		rpc("print_message_from_server", _gelt_status())
-		_iterate_turn()
+### Status and Debug
+func _gelt_status() -> String:
+	var message := "Current gelt status:\n    Pot: %s\n" % pot
+	for id in players.keys():
+		message += "    %s: %s\n" % [id, players[id]["gelt"]]
+	return message
+
+
+func _spin_statistics() -> String:
+	var _str := "Dreidel spin statistics:\n"
+	var sum: float = 0
+	for count in spin_results.values():
+		sum += count
+	for category in spin_results.keys():
+		var result: float = spin_results[category]
+		var percentage: float = stepify(result / sum, 0.01)
+		_str += "    %s: %s (%s)\n" % [category, result, percentage]
+	return _str
 
 
 ## Client Logic
