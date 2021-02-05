@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 
 window/size/width=1080
 window/size/height=2338
+window/handheld/orientation="portrait"
 
 [rendering]
 
