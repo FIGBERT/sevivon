@@ -136,8 +136,8 @@ func _spin_dreidel(id: int) -> void:
 			_everyone_puts_in_one()
 			spin_results["gimmel"] += 1
 		2: # hey
-			players[id]["gelt"] += floor(pot / 2)
-			pot -= floor(pot / 2)
+			players[id]["gelt"] += floor(pot / 2.0)
+			pot -= floor(pot / 2.0)
 			if pot == 1:
 				_everyone_puts_in_one()
 			spin_results["hey"] += 1
