@@ -8,6 +8,12 @@ const MAX_PLAYERS := 2
 const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
 var players := {}
 var pot := 5
+var spin_results := {
+	"nun": 0,
+	"gimmel": 0,
+	"hey": 0,
+	"pey/shin": 0,
+}
 remotesync var game_started := false
 remotesync var game_over := false
 remotesync var current_turn := { "id": -1, "index": -1 }
@@ -79,6 +85,19 @@ func _end_game(message: String, over := false) -> void:
 		players[id]["in"] = true
 	pot = 5
 	rpc("print_message_from_server", message)
+	print(_spin_statistics())
+
+
+func _spin_statistics() -> String:
+	var _str := "Dreidel spin statistics:\n"
+	var sum: float = 0
+	for count in spin_results.values():
+		sum += count
+	for category in spin_results.keys():
+		var result: float = spin_results[category]
+		var percentage: float = stepify(result / sum, 0.01)
+		_str += "    %s: %s (%s)\n" % [category, result, percentage]
+	return _str
 
 
 func _iterate_turn() -> void:
@@ -107,22 +126,27 @@ func _spin_dreidel(id: int) -> void:
 	var result: String = DREIDEL_FACES[spin]
 	rpc("print_message_from_server", "%s landed on %s!" % [id, result])
 	match(spin):
-		1: # gimel
+		0: # nun
+			spin_results["nun"] += 1
+		1: # gimmel
 			players[id]["gelt"] += pot
 			pot = 0
 			_everyone_puts_in_one()
+			spin_results["gimmel"] += 1
 		2: # hey
 			players[id]["gelt"] += floor(pot / 2)
 			pot -= floor(pot / 2)
 			if pot == 1:
 				_everyone_puts_in_one()
-		3: # shin
+			spin_results["hey"] += 1
+		3: # pey/shin
 			if players[id]["gelt"] > 0:
 				players[id]["gelt"] -= 1
 				pot += 1
 			else:
 				rpc("print_message_from_server", "%s can't pay – you lose!" % id)
 				players[id]["in"] = false
+			spin_results["pey/shin"] += 1
 
 
 func _everyone_puts_in_one() -> void:
