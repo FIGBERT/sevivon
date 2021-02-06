@@ -1,8 +1,8 @@
 * Ruleset
 ** Game Setup
 + Each player receives a set amount of gelt
-  - Initially this is set to 10, but in the final game players will choose between
-  a number of options.
+  - Initially this is set to 10, but in the final game players will choose
+    between a number of options.
 + The pot starts with 5 gelt
 ** Each Spin
 + The spin order is the order clients joined the lobby
