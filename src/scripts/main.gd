@@ -1,13 +1,13 @@
 extends Node
 
 
-const ACCEL_THRESHOLD := 3
 const SERVER_IP := "10.0.0.76"
 const SERVER_PORT := 1780
 const MAX_PLAYERS := 2
 const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
 const POT_STARTING_GELT := 5
 const PLAYER_STARTING_GELT := 10
+var ACCEL_THRESHOLD := 3 if OS.get_name() == "iOS" else 30
 var players := {}
 var pot := POT_STARTING_GELT
 var spin_results := {
