@@ -1,20 +1,20 @@
 * Ruleset
 ** Game Setup
-*** Each player receives a set amount of gelt
-Initially this is set to 10, but in the final game players will choose between
-a number of options.
-*** The pot starts with 5 gelt
++ Each player receives a set amount of gelt
+  - Initially this is set to 10, but in the final game players will choose between
+  a number of options.
++ The pot starts with 5 gelt
 ** Each Spin
-*** The spin order is the order clients joined the lobby
-*** Each player takes/gives gelt to the pot based on spin
-**** Gimel - take all
-**** Hey - take half (floored)
-**** Nun - take nothing
-**** Shin - put one in
-*** If the pot has less than two pieces of gelt, everyone puts in one piece
-**** If a player cannot put in a piece, they are out
++ The spin order is the order clients joined the lobby
++ Each player takes/gives gelt to the pot based on spin
+  - Gimel - take all
+  - Hey - take half (floored)
+  - Nun - take nothing
+  - Shin - put one in
++ If the pot has less than two pieces of gelt, everyone puts in one piece
+  - If a player cannot put in a piece, they are out
 ** Win Condition
-*** A winner is determined once everybody else is out
++ A winner is determined once everybody else is out
 
 * Multiplayer Documentation
 ** Networking
