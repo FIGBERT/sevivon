@@ -21,6 +21,7 @@
 1. [[https://docs.godotengine.org/en/stable/tutorials/networking/high_level_multiplayer.html][High-Level Multiplayer]]
 2. [[https://docs.godotengine.org/en/stable/tutorials/networking/http_request_class.html][Making HTTP Requests]]
 3. [[https://docs.godotengine.org/en/stable/tutorials/networking/ssl_certificates.html][SSL Certificates]]
+4. [[https://docs.godotengine.org/en/stable/getting_started/scripting/gdscript/gdscript_basics.html#coroutines-with-yield][Coroutines with yield]]
 ** Server Exports
 1. [[https://docs.godotengine.org/en/stable/getting_started/workflow/export/exporting_for_dedicated_servers.html][Exporting for Dedicated Servers]]
 2. [[https://docs.godotengine.org/en/stable/development/compiling/compiling_for_osx.html#compiling-a-headless-server-build][Compiling a Server Build for macOS]]
