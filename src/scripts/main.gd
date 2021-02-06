@@ -55,14 +55,18 @@ func _client_joined_server(id: int) -> void:
 		var peers := _join_array(players.keys(), "\n    ")
 		var message: String = "Some players are already here:\n    %s" % peers
 		rpc_id(id, "print_message_from_server", message)
-	rpc("print_message_from_server", "%s has joined the server!" % id)
+	for player in players:
+		var message := "%s has joined the server!" % id
+		rpc_id(player, "print_message_from_server", message)
 	players[id] = { "gelt": PLAYER_STARTING_GELT, "in": true }
 
 
 func _client_left_server(id: int) -> void:
 	print("%s disconnected from the server" % id)
 	players.erase(id)
-	rpc("print_message_from_server", "%s has left the server." % id)
+	for player in players:
+		var message := "%s has left the server." % id
+		rpc_id(player, "print_message_from_server", message)
 
 
 ### Game Phases
