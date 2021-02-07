@@ -10,12 +10,6 @@ const PLAYER_STARTING_GELT := 10
 var ACCEL_THRESHOLD := 3 if OS.get_name() == "iOS" else 30
 var players := {}
 var pot := POT_STARTING_GELT
-var spin_results := {
-	"nun": 0,
-	"gimmel": 0,
-	"hey": 0,
-	"pey/shin": 0,
-}
 remotesync var game_started := false
 remotesync var game_over := false
 remotesync var current_turn := { "id": -1, "index": -1 }
@@ -89,7 +83,6 @@ func _end_game(message: String, over := false) -> void:
 		players[id]["in"] = true
 	pot = POT_STARTING_GELT
 	rpc("print_message_from_server", message)
-	print(_spin_statistics())
 
 ### Dreidel Actions
 remote func client_spun() -> void:
@@ -118,19 +111,15 @@ func _spin_dreidel(id: int) -> bool:
 	var result: String = DREIDEL_FACES[spin]
 	rpc("print_message_from_server", "%s landed on %s!" % [id, result])
 	match(spin):
-		0: # nun
-			spin_results["nun"] += 1
 		1: # gimmel
 			players[id]["gelt"] += pot
 			pot = 0
 			needs_ante = true
-			spin_results["gimmel"] += 1
 		2: # hey
 			players[id]["gelt"] += floor(pot / 2.0)
 			pot -= floor(pot / 2.0)
 			if pot == 1:
 				needs_ante = true
-			spin_results["hey"] += 1
 		3: # pey/shin
 			if players[id]["gelt"] > 0:
 				players[id]["gelt"] -= 1
@@ -138,7 +127,6 @@ func _spin_dreidel(id: int) -> bool:
 			else:
 				rpc("print_message_from_server", "%s can't pay – you lose!" % id)
 				players[id]["in"] = false
-			spin_results["pey/shin"] += 1
 	return needs_ante
 
 
@@ -188,18 +176,6 @@ func _gelt_status() -> String:
 	for id in players.keys():
 		message += "    %s: %s\n" % [id, players[id]["gelt"]]
 	return message
-
-
-func _spin_statistics() -> String:
-	var _str := "Dreidel spin statistics:\n"
-	var sum: float = 0
-	for count in spin_results.values():
-		sum += count
-	for category in spin_results.keys():
-		var result: float = spin_results[category]
-		var percentage: float = stepify(result / sum, 0.01)
-		_str += "    %s: %s (%s)\n" % [category, result, percentage]
-	return _str
 
 
 ## Client Logic
