@@ -5,6 +5,7 @@ const SERVER_IP := "10.0.0.76"
 const SERVER_PORT := 1780
 const MAX_PLAYERS := 2
 const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
+const USERNAMES := ["Judah", "Yochanan", "Shimon", "Elazar", "Yonatan"]
 const POT_STARTING_GELT := 5
 const PLAYER_STARTING_GELT := 10
 var ACCEL_THRESHOLD := 3 if OS.get_name() == "iOS" else 30
@@ -44,22 +45,34 @@ func _initialize_server() -> void:
 
 ### Network Peer Signals
 func _client_joined_server(id: int) -> void:
-	print("%s joined successfully" % id)
-	if players.size() > 0:
-		var peers := _join_array(players.keys(), "\n    ")
-		var message: String = "Some players are already here:\n    %s" % peers
+	players[id] = {
+		"name": USERNAMES[players.size()],
+		"gelt": PLAYER_STARTING_GELT,
+		"in": true,
+	}
+	
+	var username: String = players[id]["name"]
+	var greeting: String = "Welcome to Sov! You're now known as %s." % username
+	print("%s (%s) joined successfully" % [username, id])
+	rpc_id(id, "print_message_from_server", greeting)
+	
+	var peers := _peers(id)
+	if peers.size() > 0:
+		var names := _join_array(_peers(id, true), "\n    ")
+		var message: String = "Some players are already here:\n    %s" % names
 		rpc_id(id, "print_message_from_server", message)
-	for player in players:
-		var message := "%s has joined the server!" % id
+	for player in peers:
+		var message: String = "%s has joined the server!" % username
 		rpc_id(player, "print_message_from_server", message)
-	players[id] = { "gelt": PLAYER_STARTING_GELT, "in": true }
 
 
 func _client_left_server(id: int) -> void:
-	print("%s disconnected from the server" % id)
+	var username: String = players[id]["name"]
+	print("%s (%s) disconnected from the server" % [username, id])
 	players.erase(id)
+	
 	for player in players:
-		var message := "%s has left the server." % id
+		var message := "%s has left the server." % username
 		rpc_id(player, "print_message_from_server", message)
 
 
@@ -69,7 +82,8 @@ func _start_game() -> void:
 	rset("game_started", true)
 	rpc("print_message_from_server", "The game has begun!")
 	rset("current_turn", { "id": players.keys()[0], "index": 0 })
-	rpc("print_message_from_server", "It's %s's turn" % current_turn["id"])
+	var username = players[current_turn["id"]]["name"]
+	rpc("print_message_from_server", "It's %s's turn" % username)
 	rpc("print_message_from_server", _gelt_status())
 
 
@@ -89,7 +103,7 @@ remote func client_spun() -> void:
 	var sender := get_tree().get_rpc_sender_id()
 	if sender != current_turn["id"]:
 		return
-	rpc("print_message_from_server", "%s has spun the dreidel..." % sender)
+	rpc("print_message_from_server", "%s has spun the dreidel..." % players[sender]["name"])
 	var needs_ante := _spin_dreidel(sender)
 	if needs_ante:
 		rpc("print_message_from_server", _gelt_status())
@@ -98,7 +112,7 @@ remote func client_spun() -> void:
 	var has_won := _check_for_winner()
 	if has_won:
 		var winner := _find_winner()
-		_end_game("We have a winner! Congratulations, %s!" % winner, true)
+		_end_game("We have a winner! Congratulations, %s!" % players[winner]["name"], true)
 	else:
 		rpc("print_message_from_server", _gelt_status())
 		_iterate_turn()
@@ -106,10 +120,11 @@ remote func client_spun() -> void:
 
 func _spin_dreidel(id: int) -> bool:
 	randomize()
+	var username: String = players[id]["name"]
 	var needs_ante := false
 	var spin: int = floor(rand_range(0, 4))
 	var result: String = DREIDEL_FACES[spin]
-	rpc("print_message_from_server", "%s landed on %s!" % [id, result])
+	rpc("print_message_from_server", "%s landed on %s!" % [username, result])
 	match(spin):
 		1: # gimmel
 			players[id]["gelt"] += pot
@@ -125,7 +140,7 @@ func _spin_dreidel(id: int) -> bool:
 				players[id]["gelt"] -= 1
 				pot += 1
 			else:
-				rpc("print_message_from_server", "%s can't pay – you lose!" % id)
+				rpc("print_message_from_server", "%s can't pay – you lose!" % username)
 				players[id]["in"] = false
 	return needs_ante
 
@@ -138,7 +153,8 @@ func _everyone_puts_in_one() -> void:
 			players[id]["gelt"] -= 1
 			pot += 1
 		else:
-			rpc("print_message_from_server", "%s can't pay the ante – you lose!" % id)
+			var username: String = players[id]["name"]
+			rpc("print_message_from_server", "%s can't pay the ante – you lose!" % username)
 			players[id]["in"] = false
 
 
@@ -151,8 +167,10 @@ func _iterate_turn() -> void:
 	if not players[players.keys()[index]]["in"]:
 		current_turn = { "id": players.keys()[index], "index": index }
 		_iterate_turn()
-	rset("current_turn", { "id": players.keys()[index], "index": index })
-	rpc("print_message_from_server", "It's now %s's turn" % current_turn["id"])
+	var id: int = players.keys()[index]
+	var username: String = players[id]["name"]
+	rset("current_turn", { "id": id, "index": index })
+	rpc("print_message_from_server", "It's now %s's turn" % username)
 
 
 ### Winner
@@ -174,7 +192,9 @@ func _find_winner() -> int:
 func _gelt_status() -> String:
 	var message := "Current gelt status:\n    Pot: %s\n" % pot
 	for id in players.keys():
-		message += "    %s: %s\n" % [id, players[id]["gelt"]]
+		var username: String = players[id]["name"]
+		var gelt: int = players[id]["gelt"]
+		message += "    %s: %s\n" % [username, gelt]
 	return message
 
 
@@ -188,7 +208,7 @@ func _initialize_client() -> void:
 
 
 func _client_connected_successfully() -> void:
-	$Label.text += "Connection to server established as %s.\n" % get_tree().get_network_unique_id()
+	$Label.text += "Connection to server established.\n"
 
 
 func _client_connection_failed() -> void:
@@ -212,3 +232,14 @@ func _join_array(array: Array, delimiter: String = "") -> String:
 		joined_string += "%s%s" % [item, delimiter]
 	joined_string += str(array[-1])
 	return joined_string
+
+
+func _peers(id: int, names := false) -> Array:
+	var peers_array := players.keys().duplicate()
+	peers_array.erase(id)
+	if names:
+		var names_array := []
+		for peer in peers_array:
+			names_array.append(players[peer]["name"])
+		return names_array
+	return peers_array
