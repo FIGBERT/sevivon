@@ -133,3 +133,37 @@ interface before moving on to add some real graphics. By Friday, I need to:
   - Yonatan
 + Add auditory or haptic feedback to dreidel spins
 + Increase lobby max size and add start/restart mechanisms
+** <2021-02-06 Sat>
+When I said Friday I meant the 12th... I promise. I've been hard at work
+implementing the features I discussed above. I knocked out the font size patch
+on the first day - that one was a freebie - and then spent the rest of the day
+and half of the next trying to get the game running on a Pixel 4a. Now it does!
+Turns out, the only real problem I encountered was myself. I had enabled Kill
+Switch with my VPN app, and thus when I disabled it to access the local network
+it prevented me from connecting to my laptop - tad of a facepalm there.
+
+The next while I spent implementing, failing, and reimplementing the ante and
+usernames. I've noticed that when designing new features, I tend to get 85% of
+the way there and then decide that I want to start over and do it another way.
+Both the ante and username systems are currently almost complete, but not quite
+there yet. With antes, I initially struggled to figure out how to implement some
+sort of waiting system - how to get the spin function to pause until everybody
+has confirmed the ante. The current design ignores that, but will allow me to
+extend the current implementation to add a delay with ~yield~ and coroutines -
+I just need to learn how to use them. A similar caveat exists with the username
+system: all five have been added, but because the lobby size is currently
+limited to two players (which itself is because I haven't implemented a start
+mechanism), only Judah and Yochanan are ever used.
+
+Regardless, some incredible strides have been made in the last couple days. I'll
+continue working on rounding out the feature set, and then polishing the textual
+interface before I get to actual graphics. A non-exhaustive list of some things
+I have to get done:
++ Add confirmation to the ante process with ~yield~
++ Increase the lobby max size to five and make starting manual
++ Add auditory or haptic feedback to dreidel spins
++ Polish textual interface
+  - Make sure it looks nice on both iOS and Android
+  - Add little delays between messages (also with ~yield~)
+  - Make sure all the message are charismatic expressive
+    + Less like logs for a programmer and more like fun messages for a player
