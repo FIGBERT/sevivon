@@ -82,7 +82,7 @@ func _start_game() -> void:
 	rset("game_started", true)
 	rpc("print_message_from_server", "The game has begun!")
 	rset("current_turn", { "id": players.keys()[0], "index": 0 })
-	var username = players[current_turn["id"]]["name"]
+	var username: String = players[current_turn["id"]]["name"]
 	rpc("print_message_from_server", "It's %s's turn" % username)
 	rpc("print_message_from_server", _gelt_status())
 
@@ -226,8 +226,8 @@ remote func print_message_from_server(message: String) -> void:
 
 
 ## Utility Functions
-func _join_array(array: Array, delimiter: String = "") -> String:
-	var joined_string = ""
+func _join_array(array: Array, delimiter := "") -> String:
+	var joined_string := ""
 	for item in array.slice(0, -2):
 		joined_string += "%s%s" % [item, delimiter]
 	joined_string += str(array[-1])
