@@ -100,6 +100,7 @@ remote func shake_action() -> void:
 	if game_started:
 		if sender == current_turn["id"] and players[sender]["in"]:
 			_client_spun(sender)
+			rpc_id(sender, "vibrate_device")
 	else:
 		if players.size() > 1 and sender == players.keys()[0]:
 			_start_game()
@@ -218,6 +219,10 @@ func _check_for_spin() -> void:
 
 remote func print_message_from_server(message: String) -> void:
 	$Label.text += message + "\n"
+
+
+remote func vibrate_device() -> void:
+	Input.vibrate_handheld()
 
 
 ## Utility Functions
