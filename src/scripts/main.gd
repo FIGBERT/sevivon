@@ -93,6 +93,7 @@ func _end_game(message: String) -> void:
 	rpc("print_message_from_server", message)
 	rpc_id(players.keys()[0], "print_message_from_server", "To play again, shake your phone once everybody's ready!")
 
+
 ### Player Actions
 remote func shake_action() -> void:
 	var sender := get_tree().get_rpc_sender_id()
@@ -217,10 +218,6 @@ func _check_for_spin() -> void:
 
 remote func print_message_from_server(message: String) -> void:
 	$Label.text += message + "\n"
-
-
-remote func reset_label() -> void:
-	$Label.text = ""
 
 
 ## Utility Functions
