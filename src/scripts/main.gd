@@ -3,7 +3,7 @@ extends Node
 
 const SERVER_IP := "10.0.0.76"
 const SERVER_PORT := 1780
-const MAX_PLAYERS := 2
+const MAX_PLAYERS := 5
 const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
 const USERNAMES := ["Judah", "Yochanan", "Shimon", "Elazar", "Yonatan"]
 const POT_STARTING_GELT := 5
@@ -12,7 +12,6 @@ var ACCEL_THRESHOLD := 3 if OS.get_name() == "iOS" else 30
 var players := {}
 var pot := POT_STARTING_GELT
 remotesync var game_started := false
-remotesync var game_over := false
 remotesync var current_turn := { "id": -1, "index": -1 }
 
 
@@ -24,14 +23,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if "--server" in OS.get_cmdline_args() or OS.has_feature("Server"):
-		if players.size() == MAX_PLAYERS and not game_started and not game_over:
-			_start_game()
-		elif players.size() != MAX_PLAYERS and game_started and not game_over:
-			_end_game("Missing players! Stopping the game...")
-	else:
-		if game_started and current_turn["id"] == get_tree().get_network_unique_id():
-			_check_for_spin()
+	if not ("--server" in OS.get_cmdline_args() or OS.has_feature("Server")):
+		_check_for_spin()
 
 
 ## Server Logic
@@ -57,12 +50,15 @@ func _client_joined_server(id: int) -> void:
 	rpc_id(id, "print_message_from_server", greeting)
 	
 	var peers := _peers(id)
+	var message := ""
 	if peers.size() > 0:
 		var names := _join_array(_peers(id, true), "\n    ")
-		var message: String = "Some players are already here:\n    %s" % names
-		rpc_id(id, "print_message_from_server", message)
+		message = "Some players are already here:\n    %s" % names
+	else:
+		message = "You are the first player here – shake your phone to start the game once everybody's arrived!"
+	rpc_id(id, "print_message_from_server", message)
 	for player in peers:
-		var message: String = "%s has joined the server!" % username
+		message = "%s has joined the server!" % username
 		rpc_id(player, "print_message_from_server", message)
 
 
@@ -70,10 +66,8 @@ func _client_left_server(id: int) -> void:
 	var username: String = players[id]["name"]
 	print("%s (%s) disconnected from the server" % [username, id])
 	players.erase(id)
-	
-	for player in players:
-		var message := "%s has left the server." % username
-		rpc_id(player, "print_message_from_server", message)
+	if players.size() > 0:
+		_end_game("%s has left the server. Stopping the game." % username)
 
 
 ### Game Phases
@@ -81,28 +75,36 @@ func _start_game() -> void:
 	get_tree().set_refuse_new_network_connections(true)
 	rset("game_started", true)
 	rpc("print_message_from_server", "The game has begun!")
+	yield(get_tree().create_timer(0.5), "timeout")
 	rset("current_turn", { "id": players.keys()[0], "index": 0 })
 	var username: String = players[current_turn["id"]]["name"]
 	rpc("print_message_from_server", "It's %s's turn" % username)
 	rpc("print_message_from_server", _gelt_status())
 
 
-func _end_game(message: String, over := false) -> void:
+func _end_game(message: String) -> void:
 	get_tree().set_refuse_new_network_connections(false)
 	rset("game_started", false)
-	rset("game_over", over)
 	rset("current_turn", { "id": -1, "index": -1 })
 	for id in players.keys():
 		players[id]["gelt"] = PLAYER_STARTING_GELT
 		players[id]["in"] = true
 	pot = POT_STARTING_GELT
 	rpc("print_message_from_server", message)
+	rpc_id(players.keys()[0], "print_message_from_server", "To play again, shake your phone once everybody's ready!")
 
-### Dreidel Actions
-remote func client_spun() -> void:
+### Player Actions
+remote func shake_action() -> void:
 	var sender := get_tree().get_rpc_sender_id()
-	if sender != current_turn["id"]:
-		return
+	if game_started:
+		if sender == current_turn["id"] and players[sender]["in"]:
+			_client_spun(sender)
+	else:
+		if players.size() > 1 and sender == players.keys()[0]:
+			_start_game()
+
+
+func _client_spun(sender: int) -> void:
 	rpc("print_message_from_server", "%s has spun the dreidel..." % players[sender]["name"])
 	var needs_ante := _spin_dreidel(sender)
 	if needs_ante:
@@ -112,7 +114,7 @@ remote func client_spun() -> void:
 	var has_won := _check_for_winner()
 	if has_won:
 		var winner := _find_winner()
-		_end_game("We have a winner! Congratulations, %s!" % players[winner]["name"], true)
+		_end_game("We have a winner! Congratulations, %s!" % players[winner]["name"])
 	else:
 		rpc("print_message_from_server", _gelt_status())
 		_iterate_turn()
@@ -164,13 +166,15 @@ func _iterate_turn() -> void:
 		index = 0
 	else:
 		index = current_turn["index"] + 1
-	if not players[players.keys()[index]]["in"]:
-		current_turn = { "id": players.keys()[index], "index": index }
-		_iterate_turn()
 	var id: int = players.keys()[index]
-	var username: String = players[id]["name"]
-	rset("current_turn", { "id": id, "index": index })
-	rpc("print_message_from_server", "It's now %s's turn" % username)
+	if not players[id]["in"]:
+		current_turn = { "id": id, "index": index }
+		_iterate_turn()
+	else:
+		var username: String = players[id]["name"]
+		var new_turn := { "id": id, "index": index }
+		rset("current_turn", new_turn)
+		rpc("print_message_from_server", "It's now %s's turn" % username)
 
 
 ### Winner
@@ -186,16 +190,6 @@ func _find_winner() -> int:
 		if players[id]["in"]:
 			return id
 	return -1
-
-
-### Status and Debug
-func _gelt_status() -> String:
-	var message := "Current gelt status:\n    Pot: %s\n" % pot
-	for id in players.keys():
-		var username: String = players[id]["name"]
-		var gelt: int = players[id]["gelt"]
-		message += "    %s: %s\n" % [username, gelt]
-	return message
 
 
 ## Client Logic
@@ -218,20 +212,29 @@ func _client_connection_failed() -> void:
 func _check_for_spin() -> void:
 	var accel := Input.get_accelerometer()
 	if accel.length() > ACCEL_THRESHOLD:
-		rpc_id(1, "client_spun")
+		rpc_id(1, "shake_action")
 
 
 remote func print_message_from_server(message: String) -> void:
 	$Label.text += message + "\n"
 
 
+remote func reset_label() -> void:
+	$Label.text = ""
+
+
 ## Utility Functions
-func _join_array(array: Array, delimiter := "") -> String:
-	var joined_string := ""
-	for item in array.slice(0, -2):
-		joined_string += "%s%s" % [item, delimiter]
-	joined_string += str(array[-1])
-	return joined_string
+func _gelt_status() -> String:
+	var message := "Current gelt status:\n    Pot: %s\n" % pot
+	for id in players.keys():
+		var username: String = players[id]["name"]
+		var gelt := ""
+		if players[id]["in"]:
+			gelt = players[id]["gelt"]
+		else:
+			gelt = "Out"
+		message += "    %s: %s\n" % [username, gelt]
+	return message
 
 
 func _peers(id: int, names := false) -> Array:
@@ -243,3 +246,11 @@ func _peers(id: int, names := false) -> Array:
 			names_array.append(players[peer]["name"])
 		return names_array
 	return peers_array
+
+
+func _join_array(array: Array, delimiter := "") -> String:
+	var joined_string := ""
+	for item in array.slice(0, -2):
+		joined_string += "%s%s" % [item, delimiter]
+	joined_string += str(array[-1])
+	return joined_string
