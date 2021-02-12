@@ -201,6 +201,8 @@ func _initialize_client() -> void:
 	get_tree().network_peer = peer
 	get_tree().connect("connected_to_server", self, "_client_connected_successfully")
 	get_tree().connect("connection_failed", self, "_client_connection_failed")
+	var safe_area := OS.get_window_safe_area()
+	$Label.set_margin(MARGIN_TOP, safe_area.position.y)
 
 
 func _client_connected_successfully() -> void:
