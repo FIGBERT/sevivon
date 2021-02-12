@@ -193,6 +193,35 @@ non-exhaustive list of some things I have to get done:
 - Polish textual interface
   - Make sure it looks nice on both iOS and Android
   - Add little delays between messages (also with `yield`)
-  - Make sure all the message are charismatic expressive
+  - Make sure all the message are charismatic and expressive
     - Less like logs for a programmer and more like fun messages for a player
+
+## 2021-02-11 Thu
+
+Over the past couple days, I achieved *most* of the above goals! Not bad.
+Yesterday, I increased the maximum lobby size to five (which is where it will
+stay) – now the first player to join must shake their phone once to start a
+match. In doing so, I encountered a weird issue with `yield` that caused the
+0.5 second delay I was implementing to not fire depending on where I placed
+it within a function. Odd, but I worked it out in the end.
+
+I've also added haptic/vibrational feedback to dreidel spins. However, I'm not
+sure this will make it into the final game. Once I start adding graphics, I
+plan on also adding in a dreidel spinning sound effect which may replace the
+current system or operate alongside it.
+
+For the final change I've made so far, I did some research into responsive
+design with the Godot 2D editor and have made the `Label` element much more
+adaptable to a variety of different screens.
+
+Current todos (not many left):
+
+- Go over ruleset one more time
+  - Lately I've been thinking that games are going on for too long. Potential
+  ways to fix this include changing up the gelt amounts, anteing after every
+  turn, and rounding up instead of down when you roll hey.
+- Add confirmation to the ante process
+- Polish messsages
+  - Add short delays between messages
+  - Make sure all messages make sense
 
