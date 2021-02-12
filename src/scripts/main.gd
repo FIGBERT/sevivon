@@ -179,21 +179,6 @@ func _iterate_turn() -> void:
 		rpc("print_message_from_server", "It's now %s's turn" % username)
 
 
-### Winner
-func _check_for_winner() -> bool:
-	var sum := 0
-	for id in players.keys():
-		sum += int(players[id]["in"])
-	return true if sum == 1 else false
-
-
-func _find_winner() -> int:
-	for id in players.keys():
-		if players[id]["in"]:
-			return id
-	return -1
-
-
 ## Client Logic
 func _initialize_client() -> void:
 	var peer := NetworkedMultiplayerENet.new()
@@ -228,6 +213,20 @@ remote func vibrate_device() -> void:
 
 
 ## Utility Functions
+func _check_for_winner() -> bool:
+	var sum := 0
+	for id in players.keys():
+		sum += int(players[id]["in"])
+	return true if sum == 1 else false
+
+
+func _find_winner() -> int:
+	for id in players.keys():
+		if players[id]["in"]:
+			return id
+	return -1
+
+
 func _gelt_status() -> String:
 	var message := "Current gelt status:\n    Pot: %s\n" % pot
 	for id in players.keys():
