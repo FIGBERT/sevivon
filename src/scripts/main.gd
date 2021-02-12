@@ -1,6 +1,7 @@
 extends Node
 
 
+signal client_anted
 const SERVER_IP := "10.0.0.76"
 const SERVER_PORT := 1780
 const MAX_PLAYERS := 5
@@ -42,6 +43,7 @@ func _client_joined_server(id: int) -> void:
 		"name": USERNAMES[players.size()],
 		"gelt": PLAYER_STARTING_GELT,
 		"in": true,
+		"paid_ante": true,
 	}
 	
 	var username: String = players[id]["name"]
@@ -98,12 +100,16 @@ func _end_game(message: String) -> void:
 remote func shake_action() -> void:
 	var sender := get_tree().get_rpc_sender_id()
 	if game_started:
-		if sender == current_turn["id"] and players[sender]["in"]:
+		if sender == current_turn["id"] and players[sender]["in"] and _everyone_anted():
 			_client_spun(sender)
+			rpc_id(sender, "vibrate_device")
+		elif not players[sender]["paid_ante"]:
+			_send_ante_signal(sender)
 			rpc_id(sender, "vibrate_device")
 	else:
 		if players.size() > 1 and sender == players.keys()[0]:
 			_start_game()
+			rpc_id(sender, "vibrate_device")
 
 
 func _client_spun(sender: int) -> void:
@@ -112,7 +118,7 @@ func _client_spun(sender: int) -> void:
 	if needs_ante:
 		rpc("print_message_from_server", _gelt_status())
 		rpc("print_message_from_server", "Time to ante up!")
-		_everyone_puts_in_one()
+		yield(_everyone_puts_in_one(), "completed")
 	var has_won := _check_for_winner()
 	if has_won:
 		var winner := _find_winner()
@@ -151,15 +157,25 @@ func _spin_dreidel(id: int) -> bool:
 
 func _everyone_puts_in_one() -> void:
 	for id in players.keys():
-		if not players[id]["in"]:
+		if players[id]["in"]:
+			players[id]["paid_ante"] = false
+	
+	var ante_completed := _everyone_anted()
+	while not ante_completed:
+		var id: int = yield(self, "client_anted")
+		var username: String = players[id]["name"]
+		if not players[id]["in"] or players[id]["paid_ante"]:
+			ante_completed = _everyone_anted()
 			continue
 		if players[id]["gelt"] > 0:
 			players[id]["gelt"] -= 1
 			pot += 1
+			rpc("print_message_from_server", "%s has anted!" % username)
 		else:
-			var username: String = players[id]["name"]
 			rpc("print_message_from_server", "%s can't pay the ante – you lose!" % username)
 			players[id]["in"] = false
+		players[id]["paid_ante"] = true
+		ante_completed = _everyone_anted()
 
 
 func _iterate_turn() -> void:
@@ -177,6 +193,10 @@ func _iterate_turn() -> void:
 		var new_turn := { "id": id, "index": index }
 		rset("current_turn", new_turn)
 		rpc("print_message_from_server", "It's now %s's turn" % username)
+
+
+func _send_ante_signal(id: int) -> void:
+	emit_signal("client_anted", id)
 
 
 ## Client Logic
@@ -213,6 +233,13 @@ remote func vibrate_device() -> void:
 
 
 ## Utility Functions
+func _everyone_anted() -> bool:
+	var sum := 0
+	for id in players.keys():
+		sum += int(players[id]["paid_ante"])
+	return true if sum == players.size() else false
+
+
 func _check_for_winner() -> bool:
 	var sum := 0
 	for id in players.keys():
