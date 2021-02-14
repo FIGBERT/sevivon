@@ -12,6 +12,7 @@ const PLAYER_STARTING_GELT := 10
 var ACCEL_THRESHOLD := 3 if OS.get_name() == "iOS" else 30
 var players := {}
 var pot := POT_STARTING_GELT
+var spin_disabled := false
 remotesync var game_started := false
 remotesync var current_turn := { "id": -1, "index": -1 }
 
@@ -217,8 +218,15 @@ func _client_connection_failed() -> void:
 
 func _check_for_spin() -> void:
 	var accel := Input.get_accelerometer()
-	if accel.length() > ACCEL_THRESHOLD:
+	if accel.length() > ACCEL_THRESHOLD and not spin_disabled:
 		rpc_id(1, "shake_action")
+		_toggle_spin()
+
+
+func _toggle_spin() -> void:
+	spin_disabled = true
+	yield(get_tree().create_timer(0.5), "timeout")
+	spin_disabled = false
 
 
 remote func print_message_from_server(message: String) -> void:
