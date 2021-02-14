@@ -231,17 +231,18 @@ remote func vibrate_device() -> void:
 
 ## Utility Functions
 func _everyone_anted() -> bool:
-	var sum := 0
-	for id in players.keys():
-		sum += int(players[id]["paid_ante"])
-	return true if sum == players.size() else false
+	return _compare_player_bool_properties("paid_ante", players.size())
 
 
 func _check_for_winner() -> bool:
+	return _compare_player_bool_properties("in", 1)
+
+
+func _compare_player_bool_properties(prop: String, out: int) -> bool:
 	var sum := 0
 	for id in players.keys():
-		sum += int(players[id]["in"])
-	return true if sum == 1 else false
+		sum += int(players[id][prop])
+	return true if sum == out else false
 
 
 func _find_winner() -> int:
