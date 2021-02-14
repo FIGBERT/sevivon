@@ -160,12 +160,10 @@ func _everyone_puts_in_one() -> void:
 		if players[id]["in"]:
 			players[id]["paid_ante"] = false
 	
-	var ante_completed := _everyone_anted()
-	while not ante_completed:
+	while not _everyone_anted():
 		var id: int = yield(self, "client_anted")
 		var username: String = players[id]["name"]
 		if not players[id]["in"] or players[id]["paid_ante"]:
-			ante_completed = _everyone_anted()
 			continue
 		if players[id]["gelt"] > 0:
 			players[id]["gelt"] -= 1
@@ -175,7 +173,6 @@ func _everyone_puts_in_one() -> void:
 			rpc("print_message_from_server", "%s can't pay the ante – you lose!" % username)
 			players[id]["in"] = false
 		players[id]["paid_ante"] = true
-		ante_completed = _everyone_anted()
 
 
 func _iterate_turn() -> void:
