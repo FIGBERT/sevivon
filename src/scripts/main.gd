@@ -2,7 +2,8 @@ extends Node
 
 
 signal client_anted
-const SERVER_IP := "10.0.0.76"
+const SERVER_IP := "10.0.0.76" # Development
+#const SERVER_IP := "135.181.44.54" # Production
 const SERVER_PORT := 1780
 const MAX_PLAYERS := 5
 const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
