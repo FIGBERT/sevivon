@@ -115,11 +115,11 @@ remote func shake_action() -> void:
 
 func _client_spun(sender: int) -> void:
 	rpc("print_message_from_server", "%s has spun the dreidel..." % players[sender]["name"])
-	var needs_ante := _spin_dreidel(sender)
-	if needs_ante:
-		rpc("print_message_from_server", _gelt_status())
-		rpc("print_message_from_server", "Time to ante up!")
-		yield(_everyone_puts_in_one(), "completed")
+	yield(get_tree().create_timer(1), "timeout")
+	_spin_dreidel(sender)
+	rpc("print_message_from_server", _gelt_status())
+	rpc("print_message_from_server", "Time to ante up!")
+	yield(_everyone_puts_in_one(), "completed")
 	var has_won := _check_for_winner()
 	if has_won:
 		var winner := _find_winner()
@@ -129,10 +129,9 @@ func _client_spun(sender: int) -> void:
 		_iterate_turn()
 
 
-func _spin_dreidel(id: int) -> bool:
+func _spin_dreidel(id: int) -> void:
 	randomize()
 	var username: String = players[id]["name"]
-	var needs_ante := false
 	var spin: int = floor(rand_range(0, 4))
 	var result: String = DREIDEL_FACES[spin]
 	rpc("print_message_from_server", "%s landed on %s!" % [username, result])
@@ -140,12 +139,9 @@ func _spin_dreidel(id: int) -> bool:
 		1: # gimmel
 			players[id]["gelt"] += pot
 			pot = 0
-			needs_ante = true
 		2: # hey
-			players[id]["gelt"] += floor(pot / 2.0)
-			pot -= floor(pot / 2.0)
-			if pot == 1:
-				needs_ante = true
+			players[id]["gelt"] += ceil(pot / 2.0)
+			pot -= ceil(pot / 2.0)
 		3: # pey/shin
 			if players[id]["gelt"] > 0:
 				players[id]["gelt"] -= 1
@@ -153,7 +149,6 @@ func _spin_dreidel(id: int) -> bool:
 			else:
 				rpc("print_message_from_server", "%s can't pay – you lose!" % username)
 				players[id]["in"] = false
-	return needs_ante
 
 
 func _everyone_puts_in_one() -> void:
