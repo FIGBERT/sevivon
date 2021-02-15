@@ -8,10 +8,10 @@
 - The spin order is the order clients joined the lobby
 - Each player takes/gives gelt to the pot based on spin
   - Gimel - take all
-  - Hey - take half (floored)
+  - Hey - take half (rounded up)
   - Nun - take nothing
   - Shin - put one in
-- If the pot has less than two pieces of gelt, everyone puts in one piece
+- Everybody antes up (puts a piece of gelt into the pot)
   - If a player cannot put in a piece, they are out
 ## Win Condition
 - A winner is determined once everybody else is out
