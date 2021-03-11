@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Sov"
+config/name="Sevivon"
 run/main_scene="res://src/scenes/main.tscn"
 config/icon="res://icon.png"
 

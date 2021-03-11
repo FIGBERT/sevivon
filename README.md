@@ -1,6 +1,6 @@
-# Sov
+# Sevivon
 
-**Sov** is an open-source multiplayer [dreidel][dreidel] game for
+**Sevivon** is an open-source multiplayer [dreidel][dreidel] game for
 mobile devices, built with [Godot][godot].
 
 ## Status
@@ -16,7 +16,7 @@ organization][organization] guidelines, and holds to the following
 ASCII tree:
 
 ```
-sov/
+sevivon/
 ├─ src/
 │  ├─ scenes/
 │  │  ├─ example_scene/
