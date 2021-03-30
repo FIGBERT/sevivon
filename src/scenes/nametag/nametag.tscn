@@ -11,6 +11,7 @@ resource_local_to_scene = true
 flags_transparent = true
 flags_unshaded = true
 flags_albedo_tex_force_srgb = true
+params_billboard_mode = 1
 albedo_texture = SubResource( 2 )
 
 [sub_resource type="BoxShape" id=4]
