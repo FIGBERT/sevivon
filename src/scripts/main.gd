@@ -195,21 +195,17 @@ func _send_ante_signal(id: int) -> void:
 
 ## Client Logic
 func _initialize_client() -> void:
+	var loading_scene: Node = load("res://src/scenes/loading.tscn").instance()
+	self.add_child(loading_scene)
 	var peer := NetworkedMultiplayerENet.new()
 	peer.create_client(SERVER_IP, SERVER_PORT)
 	get_tree().network_peer = peer
 	get_tree().connect("connected_to_server", self, "_client_connected_successfully")
-	get_tree().connect("connection_failed", self, "_client_connection_failed")
-	var safe_area := OS.get_window_safe_area()
-	$Label.set_margin(MARGIN_TOP, safe_area.position.y)
+	get_tree().connect("connection_failed", $LoadingScreen/Message, "failure")
 
 
 func _client_connected_successfully() -> void:
-	$Label.text += "Connection to server established.\n"
-
-
-func _client_connection_failed() -> void:
-	$Label.text += "Could not connect to server.\n"
+	print("Connection to server established. Move to 3D scene.")
 
 
 func _check_for_spin() -> void:
@@ -226,7 +222,7 @@ func _toggle_spin() -> void:
 
 
 remote func print_message_from_server(message: String) -> void:
-	$Label.text += message + "\n"
+	print(message)
 
 
 remote func vibrate_device() -> void:
