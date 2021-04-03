@@ -201,11 +201,13 @@ func _initialize_client() -> void:
 	peer.create_client(SERVER_IP, SERVER_PORT)
 	get_tree().network_peer = peer
 	get_tree().connect("connected_to_server", self, "_client_connected_successfully")
-	get_tree().connect("connection_failed", $LoadingScreen/Message, "failure")
+	get_tree().connect("connected_to_server", $LoadingScreen, "connected")
+	get_tree().connect("connection_failed", $LoadingScreen, "failure")
 
 
 func _client_connected_successfully() -> void:
-	print("Connection to server established. Move to 3D scene.")
+	var game_scene: Node = load("res://src/scenes/gameplay.tscn").instance()
+	self.add_child(game_scene)
 
 
 func _check_for_spin() -> void:
