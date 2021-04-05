@@ -18,13 +18,6 @@ remotesync var game_started := false
 remotesync var current_turn := { "id": -1, "index": -1 }
 
 
-func _ready() -> void:
-	if "--server" in OS.get_cmdline_args() or OS.has_feature("Server"):
-		_initialize_server()
-	else:
-		_initialize_client()
-
-
 func _process(delta: float) -> void:
 	if not ("--server" in OS.get_cmdline_args() or OS.has_feature("Server")):
 		_check_for_spin()

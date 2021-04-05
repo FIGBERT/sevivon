@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/sevivon.glb-855a409f5f2d712cfe183bf500edf8f8.scn"
+path="res://.import/gelt.glb-dc799341a7952e07f2a0a017e9a7921d.scn"
 
 [deps]
 
-source_file="res://src/scenes/sevivon/sevivon.glb"
-dest_files=[ "res://.import/sevivon.glb-855a409f5f2d712cfe183bf500edf8f8.scn" ]
+source_file="res://src/client/components/gelt/gelt.glb"
+dest_files=[ "res://.import/gelt.glb-dc799341a7952e07f2a0a017e9a7921d.scn" ]
 
 [params]
 
