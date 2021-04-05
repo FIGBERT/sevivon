@@ -1,7 +1,7 @@
 extends Control
 
-const loading_message := "Connecting to server"
-const failure_message := "Connection to server failed."
+const LOADING_MESSAGE := "Connecting to server"
+const FAILURE_MESSAGE := "Connection to server failed."
 var safe_area := OS.get_window_safe_area()
 var connection_failed := false
 var dots := 0
@@ -9,7 +9,7 @@ var dots := 0
 func _ready() -> void:
 	self.set_margin(MARGIN_TOP, safe_area.position.y)
 	while not connection_failed:
-		$Message.text = loading_message + ".".repeat(dots)
+		$Message.text = LOADING_MESSAGE + ".".repeat(dots)
 		yield(get_tree().create_timer(0.5), "timeout")
 		if dots < 3:
 			dots += 1
@@ -17,8 +17,5 @@ func _ready() -> void:
 			dots = 0
 
 func failure() -> void:
-	$Message.text = failure_message
+	$Message.text = FAILURE_MESSAGE
 	connection_failed = true
-
-func connected() -> void:
-	get_parent().remove_child(self)
