@@ -8,6 +8,7 @@ var SERVER_IP := "135.181.44.54" if OS.has_feature("release") else "10.0.0.76"
 
 func _ready() -> void:
 	reset_network()
+	State.reset_state()
 
 
 func reset_network() -> void:

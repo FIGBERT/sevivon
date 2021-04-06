@@ -8,8 +8,8 @@ func _ready() -> void:
 
 
 func _client_joined_server(id: int) -> void:
-	print("%s has joined the server" % id)
+	State.add_player(id)
 
 
 func _client_left_server(id: int) -> void:
-	print("%s has left the server" % id)
+	State.remove_player(id)
