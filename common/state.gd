@@ -40,3 +40,9 @@ func remove_player(id: int) -> void:
 	var _players := players.duplicate(true)
 	_players.erase(id)
 	rset("players", _players)
+
+
+func make_player_ready(id: int) -> void:
+	var _players := players.duplicate(true)
+	_players[id]["ready"] = true
+	rset("players", _players)

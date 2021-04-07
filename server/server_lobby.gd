@@ -13,3 +13,7 @@ func _client_joined_server(id: int) -> void:
 
 func _client_left_server(id: int) -> void:
 	State.remove_player(id)
+
+
+remote func client_ready(id: int) -> void:
+	State.make_player_ready(id)
