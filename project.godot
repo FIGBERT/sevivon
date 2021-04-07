@@ -16,13 +16,13 @@ _global_script_class_icons={
 [application]
 
 config/name="Sevivon"
-run/main_scene="res://src/entry.tscn"
+run/main_scene="res://entry.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-Network="*res://src/common/networking.gd"
-State="*res://src/common/state.gd"
+Network="*res://common/networking.gd"
+State="*res://common/state.gd"
 
 [display]
 

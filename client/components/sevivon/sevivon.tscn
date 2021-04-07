@@ -1,11 +1,12 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://src/client/components/sevivon/nun.material" type="Material" id=1]
-[ext_resource path="res://src/client/components/sevivon/wood.material" type="Material" id=2]
-[ext_resource path="res://src/client/components/sevivon/gimel.material" type="Material" id=3]
-[ext_resource path="res://src/client/components/sevivon/pey_shin.material" type="Material" id=4]
-[ext_resource path="res://src/client/components/sevivon/hey.material" type="Material" id=5]
-[ext_resource path="res://src/client/components/nametag/nametag.tscn" type="PackedScene" id=6]
+[ext_resource path="res://client/components/sevivon/nun.material" type="Material" id=1]
+[ext_resource path="res://client/components/sevivon/wood.material" type="Material" id=2]
+[ext_resource path="res://client/components/sevivon/gimel.material" type="Material" id=3]
+[ext_resource path="res://client/components/sevivon/pey_shin.material" type="Material" id=4]
+[ext_resource path="res://client/components/sevivon/hey.material" type="Material" id=5]
+[ext_resource path="res://client/components/nametag/nametag.tscn" type="PackedScene" id=6]
+
 
 
 
