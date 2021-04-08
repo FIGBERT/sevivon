@@ -15,7 +15,7 @@ func _ready() -> void:
 
 
 func _connection_successful() -> void:
-	get_tree().change_scene("res://client/lobby/lobby.tscn")
+	get_tree().change_scene("res://client/lobby/client_lobby.tscn")
 
 
 func _connection_failed() -> void:
