@@ -1,7 +1,8 @@
 extends Node
 
 
-onready var players = preload("res://client/components/gameplay/players.gd").new()
+onready var players := preload("res://client/components/gameplay/players.gd").new(
+		get_tree().get_network_unique_id())
 
 
 func _ready() -> void:

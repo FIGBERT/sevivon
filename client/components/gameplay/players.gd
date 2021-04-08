@@ -1,7 +1,11 @@
 extends Node
 
 
-var id := get_tree().get_network_unique_id()
+var id: int
+
+
+func _init(_id: int) -> void:
+	id = _id
 
 
 func create_self() -> Node:
