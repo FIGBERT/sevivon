@@ -14,7 +14,7 @@ script = ExtResource( 3 )
 [node name="Floor" parent="." instance=ExtResource( 1 )]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.896332, 0.443384, 0, -0.443384, 0.896332, 0, 3, 10 )
+transform = Transform( 1, 0, 0, 0, 0.751034, 0.660264, 0, -0.660264, 0.751034, 0, 10, 13 )
 
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
