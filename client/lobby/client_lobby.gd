@@ -4,10 +4,6 @@ extends Node
 func _ready() -> void:
 	var safe_area := OS.get_window_safe_area()
 	$UI/JoinLabel.set_margin(MARGIN_TOP, safe_area.position.y)
-	
-	var me: Node = load("res://client/components/sevivon/sevivon.tscn").instance()
-	me.translate(Vector3.BACK * 3)
-	get_tree().get_root().add_child(me)
 
 
 func _on_button_pressed() -> void:
