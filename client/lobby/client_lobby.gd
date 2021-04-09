@@ -28,4 +28,4 @@ remote func player_left(username: String, id: int) -> void:
 
 
 remote func start_match() -> void:
-	get_tree().change_scene("res://client/match/match.tscn")
+	get_tree().change_scene("res://client/match/client_match.tscn")
