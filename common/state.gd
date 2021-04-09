@@ -35,6 +35,14 @@ func all_players_ready() -> bool:
 	return true if sum == players.size() else false
 
 
+func get_peer_ids(id: int) -> Array:
+	var peers: Array
+	for pid in players.keys():
+		if pid != id:
+			peers.append(pid)
+	return peers
+
+
 class Player:
 	var id: int
 	var username: String

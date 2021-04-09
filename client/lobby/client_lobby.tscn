@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://client/components/gameplay/terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/fonts/NotoSansUI.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,10 @@
 
 [sub_resource type="DynamicFont" id=1]
 size = 54
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
 font_data = ExtResource( 2 )
 
 [node name="Lobby" type="Spatial"]
@@ -24,7 +28,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="UI"]
+[node name="ReadyButton" type="Button" parent="UI"]
 anchor_left = 0.5
 anchor_top = 0.8
 anchor_right = 0.5
@@ -38,7 +42,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="UI"]
+[node name="WaitingLabel" type="Label" parent="UI"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.8
@@ -51,4 +55,12 @@ custom_fonts/font = SubResource( 1 )
 text = "Waiting for others to ready up..."
 align = 1
 valign = 1
-[connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
+
+[node name="JoinLabel" type="Label" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="UI/ReadyButton" to="." method="_on_button_pressed"]
