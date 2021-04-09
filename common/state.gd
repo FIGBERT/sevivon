@@ -28,6 +28,13 @@ func make_player_ready(id: int) -> void:
 	rset("players", _players)
 
 
+func all_players_ready() -> bool:
+	var sum := 0
+	for id in players.keys():
+		sum += int(players[id].ready)
+	return true if sum == players.size() else false
+
+
 class Player:
 	var id: int
 	var username: String

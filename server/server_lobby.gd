@@ -17,3 +17,5 @@ func _client_left_server(id: int) -> void:
 
 remote func client_ready(id: int) -> void:
 	State.make_player_ready(id)
+	if State.all_players_ready():
+		rpc("start_match")
