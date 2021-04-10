@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://client/components/gameplay/terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://client/components/sevivon/sevivon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://client/match/client_match.gd" type="Script" id=3]
 
 [node name="Match" type="Spatial"]
+script = ExtResource( 3 )
 
 [node name="Sevivon" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
