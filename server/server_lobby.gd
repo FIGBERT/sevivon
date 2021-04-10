@@ -25,3 +25,4 @@ remote func client_ready(id: int) -> void:
 	State.make_player_ready(id)
 	if State.players.size() > 1 and State.all_players_ready():
 		rpc("start_match")
+		get_tree().change_scene("res://server/match/server_match.tscn")
