@@ -6,7 +6,7 @@ const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
 
 
 func _ready() -> void:
-	State.increment_turn()
+	State.iterate_turn()
 
 
 remote func shake_action() -> void:
@@ -26,7 +26,7 @@ func _client_spun(sender: int) -> void:
 	if has_won:
 		var winner := State.get_winner()
 	else:
-		State.increment_turn()
+		State.iterate_turn()
 
 
 func _spin_dreidel(id: int) -> void:

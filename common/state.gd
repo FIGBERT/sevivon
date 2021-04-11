@@ -94,7 +94,7 @@ func get_peer_ids(id: int) -> Array:
 	return peers
 
 
-func increment_turn() -> void:
+func iterate_turn() -> void:
 	var index := players.keys().find(current_turn) + 1
 	if index == players.size() or index == -1:
 		index = 0
