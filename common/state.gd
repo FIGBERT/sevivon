@@ -98,7 +98,8 @@ func iterate_turn() -> void:
 	var index := players.keys().find(current_turn) + 1
 	if index == players.size() or index == -1:
 		index = 0
-	current_turn = players.keys()[index]
+	var new_turn: int = players.keys()[index]
+	rset("current_turn", new_turn)
 
 
 class Player:
