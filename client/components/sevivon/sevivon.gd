@@ -1,6 +1,7 @@
 extends KinematicBody
 
 
-func create_username_tag(username: String) -> void:
+func set_username_tag(username: String) -> void:
 	$NameTag.set_username(username)
-	$NameTag.show()
+	if not $NameTag.visible:
+		$NameTag.show()
