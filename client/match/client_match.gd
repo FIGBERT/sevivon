@@ -5,6 +5,10 @@ var ACCEL_THRESHOLD := 3 if OS.get_name() == "iOS" else 30
 var spin_disabled := false
 
 
+func _ready() -> void:
+	$Sevivon.set_username_tag(State.players[State.current_turn]["name"])
+
+
 func _process(delta: float) -> void:
 	var accel := Input.get_accelerometer()
 	if accel.length() > ACCEL_THRESHOLD and not spin_disabled:
@@ -16,3 +20,6 @@ func _process(delta: float) -> void:
 
 remote func vibrate_device() -> void:
 	Input.vibrate_handheld()
+
+remote func set_username_tag(username: String) -> void:
+	$Sevivon.set_username_tag(username)
