@@ -11,10 +11,10 @@ func _ready() -> void:
 
 remote func shake_action() -> void:
 	var sender := get_tree().get_rpc_sender_id()
-	if sender == State.current_turn and State.players[sender].in_game and State.all_players_anted():
+	if sender == State.current_turn and State.players[sender]["in"] and State.all_players_anted():
 		_client_spun(sender)
 		rpc_id(sender, "vibrate_device")
-	elif not State.players[sender].paid_ante:
+	elif not State.players[sender]["paid_ante"]:
 		emit_signal("client_anted", sender)
 		rpc_id(sender, "vibrate_device")
 
@@ -38,7 +38,7 @@ func _spin_dreidel(id: int) -> void:
 		2: # hey
 			State.increase_player_gelt(id, int(ceil(State.pot / 2.0)))
 		3: # pey/shin
-			if State.players[id].gelt > 0:
+			if State.players[id]["gelt"] > 0:
 				State.decrease_player_gelt(id, 1)
 			else:
 				State.eliminate_player(id)
@@ -46,14 +46,14 @@ func _spin_dreidel(id: int) -> void:
 
 func _everyone_puts_in_one() -> void:
 	for id in State.players.keys():
-		if State.players[id].in_game:
+		if State.players[id]["in"]:
 			State.set_player_ante_value(id, false)
 	
 	while not State.all_players_anted():
 		var id: int = yield(self, "client_anted")
-		if not State.players[id].in_game or State.players[id].paid_ante:
+		if not State.players[id]["in"] or State.players[id]["paid_ante"]:
 			continue
-		if State.players[id].gelt > 0:
+		if State.players[id]["gelt"] > 0:
 			State.decrease_player_gelt(id, 1)
 		else:
 			State.eliminate_player(id)

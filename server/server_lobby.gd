@@ -9,13 +9,13 @@ func _ready() -> void:
 
 func _client_joined_server(id: int) -> void:
 	State.add_player(id)
-	var username: String = State.players[id].username
+	var username: String = State.players[id]["name"]
 	for peer in State.get_peer_ids(id):
 		rpc_id(peer, "player_joined", username, id)
 
 
 func _client_left_server(id: int) -> void:
-	var username: String = State.players[id].username
+	var username: String = State.players[id]["name"]
 	State.remove_player(id)
 	for peer in State.get_peer_ids(id):
 		rpc_id(peer, "player_left", username, id)
