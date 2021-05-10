@@ -50,6 +50,7 @@ func _everyone_puts_in_one() -> void:
 	for id in State.players.keys():
 		if State.players[id]["in"]:
 			State.set_player_ante_value(id, false)
+	rpc("update_ui")
 	
 	while not State.all_players_anted():
 		var id: int = yield(self, "client_anted")
@@ -60,3 +61,4 @@ func _everyone_puts_in_one() -> void:
 		else:
 			State.eliminate_player(id)
 		State.set_player_ante_value(id, true)
+		rpc("update_ui")

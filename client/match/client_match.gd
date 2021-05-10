@@ -49,7 +49,9 @@ func _update_indicators() -> void:
 			node.set("custom_colors/font_color", Color.darkgray)
 			node.set_text(TEMPLATE % [player.get("name"), 0])
 		else:
-			if id == State.current_turn:
+			if not player.get("paid_ante"):
+				node.set("custom_colors/font_color", Color.darkred)
+			elif id == State.current_turn and State.all_players_anted():
 				node.set("custom_colors/font_color", Color.darkgreen)
 			else:
 				node.set("custom_colors/font_color", Color.white)
