@@ -7,6 +7,8 @@ var spin_disabled := false
 
 
 func _ready() -> void:
+	var safe_area := OS.get_window_safe_area()
+	$UI.set_margin(MARGIN_TOP, safe_area.position.y)
 	$Sevivon.set_username_tag(State.players[State.current_turn]["name"])
 	_generate_ui()
 	_update_indicators()
