@@ -65,5 +65,6 @@ remote func update_ui() -> void:
 remote func vibrate_device() -> void:
 	Input.vibrate_handheld()
 
+
 remote func set_username_tag(username: String) -> void:
 	$Sevivon.set_username_tag(username)
