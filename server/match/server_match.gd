@@ -28,6 +28,7 @@ func _client_spun(sender: int) -> void:
 	else:
 		State.iterate_turn()
 		rpc("set_username_tag", State.players[State.current_turn]["name"])
+		rpc("update_ui")
 
 
 func _spin_dreidel(id: int) -> void:

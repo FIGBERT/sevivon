@@ -54,6 +54,10 @@ func _update_indicators() -> void:
 			node.set_text(TEMPLATE % [player.get("name"), player.get("gelt")])
 
 
+remote func update_ui() -> void:
+	_update_indicators()
+
+
 remote func vibrate_device() -> void:
 	Input.vibrate_handheld()
 
