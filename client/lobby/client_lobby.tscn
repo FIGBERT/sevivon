@@ -67,4 +67,5 @@ custom_fonts/font = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="UI/ReadyButton" to="." method="_on_button_pressed"]
