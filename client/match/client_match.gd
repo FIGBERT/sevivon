@@ -1,12 +1,15 @@
 extends Spatial
 
 
+const TEMPLATE = "%s\n%s gelt"
 var ACCEL_THRESHOLD := 3 if OS.get_name() == "iOS" else 30
 var spin_disabled := false
 
 
 func _ready() -> void:
 	$Sevivon.set_username_tag(State.players[State.current_turn]["name"])
+	_generate_ui()
+	_update_indicators()
 
 
 func _process(delta: float) -> void:
@@ -16,6 +19,39 @@ func _process(delta: float) -> void:
 		spin_disabled = true
 		yield(get_tree().create_timer(0.5), "timeout")
 		spin_disabled = false
+
+
+func _generate_ui() -> void:
+	var keys := State.players.keys()
+	match State.players.size():
+		5:
+			$UI/BottomCenter.name = str(keys[4])
+			continue
+		4:
+			$UI/BottomRight.name = str(keys[3])
+			continue
+		3:
+			$UI/BottomLeft.name = str(keys[2])
+			continue
+		2:
+			$UI/TopRight.name = str(keys[1])
+			$UI/TopLeft.name = str(keys[0])
+
+
+func _update_indicators() -> void:
+	$UI/Gelt.set_text(TEMPLATE % ["Pot", State.pot])
+	for id in State.players.keys():
+		var node := get_node("UI/%s" % id)
+		var player: Dictionary = State.players.get(id)
+		if not player.get("in"):
+			node.set("custom_colors/font_color", Color.darkgray)
+			node.set_text(TEMPLATE % [player.get("name"), 0])
+		else:
+			if id == State.current_turn:
+				node.set("custom_colors/font_color", Color.darkgreen)
+			else:
+				node.set("custom_colors/font_color", Color.white)
+			node.set_text(TEMPLATE % [player.get("name"), player.get("gelt")])
 
 
 remote func vibrate_device() -> void:

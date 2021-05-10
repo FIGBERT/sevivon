@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://client/components/gameplay/terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://client/components/sevivon/sevivon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://client/match/client_match.gd" type="Script" id=3]
+[ext_resource path="res://assets/fonts/NotoSansUI.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 42
+font_data = ExtResource( 4 )
 
 [node name="Match" type="Spatial"]
 script = ExtResource( 3 )
@@ -15,3 +20,85 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 3, 8 )
 fov = 75.0
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gelt" type="Label" parent="UI"]
+anchor_left = 0.33
+anchor_right = 0.66
+anchor_bottom = 0.075
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 0.85098, 0.0392157, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopLeft" type="Label" parent="UI"]
+anchor_top = 0.25
+anchor_right = 0.33
+anchor_bottom = 0.325
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BottomLeft" type="Label" parent="UI"]
+anchor_top = 0.45
+anchor_right = 0.33
+anchor_bottom = 0.525
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopRight" type="Label" parent="UI"]
+anchor_left = 0.66
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.325
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BottomRight" type="Label" parent="UI"]
+anchor_left = 0.66
+anchor_top = 0.45
+anchor_right = 1.0
+anchor_bottom = 0.525
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BottomCenter" type="Label" parent="UI"]
+anchor_left = 0.33
+anchor_top = 0.8
+anchor_right = 0.66
+anchor_bottom = 0.875
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
