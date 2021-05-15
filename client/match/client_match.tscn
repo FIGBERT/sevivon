@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://client/components/gameplay/terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://client/components/sevivon/sevivon.tscn" type="PackedScene" id=2]
@@ -7,6 +7,10 @@
 
 [sub_resource type="DynamicFont" id=1]
 size = 42
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
 font_data = ExtResource( 4 )
 
 [node name="Match" type="Spatial"]
@@ -102,3 +106,15 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SpinPopup" type="PopupPanel" parent="UI"]
+margin_right = 8.0
+margin_bottom = 8.0
+
+[node name="Result" type="Label" parent="UI/SpinPopup"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 2 )
+text = "Testing"
+align = 1
+valign = 1

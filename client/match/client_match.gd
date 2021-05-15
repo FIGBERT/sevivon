@@ -1,7 +1,8 @@
 extends Spatial
 
 
-const TEMPLATE = "%s\n%s gelt"
+const INDICATOR_TEMPLATE = "%s\n%s gelt"
+const ALERT_TEMPLATE = "%s spun:\n%s"
 var ACCEL_THRESHOLD := 3 if OS.get_name() == "iOS" else 30
 var spin_disabled := false
 
@@ -41,13 +42,13 @@ func _generate_ui() -> void:
 
 
 func _update_indicators() -> void:
-	$UI/Gelt.set_text(TEMPLATE % ["Pot", State.pot])
+	$UI/Gelt.set_text(INDICATOR_TEMPLATE % ["Pot", State.pot])
 	for id in State.players.keys():
 		var node := get_node("UI/%s" % id)
 		var player: Dictionary = State.players.get(id)
 		if not player.get("in"):
 			node.set("custom_colors/font_color", Color.darkgray)
-			node.set_text(TEMPLATE % [player.get("name"), 0])
+			node.set_text(INDICATOR_TEMPLATE % [player.get("name"), 0])
 		else:
 			if not player.get("paid_ante"):
 				node.set("custom_colors/font_color", Color.darkred)
@@ -55,7 +56,20 @@ func _update_indicators() -> void:
 				node.set("custom_colors/font_color", Color.darkgreen)
 			else:
 				node.set("custom_colors/font_color", Color.white)
-			node.set_text(TEMPLATE % [player.get("name"), player.get("gelt")])
+			node.set_text(INDICATOR_TEMPLATE % [player.get("name"), player.get("gelt")])
+
+
+remote func show_spin_alert(spin: int, username: String):
+	var result: String
+	match spin:
+		0: result = "Nun"
+		1: result = "Gimmel"
+		2: result = "Hey"
+		3: result = "Pey/Shin"
+	$UI/SpinPopup/Result.set_text(ALERT_TEMPLATE % [username, result])
+	$UI/SpinPopup.popup_centered()
+	yield(get_tree().create_timer(1), "timeout")
+	$UI/SpinPopup.visible = false
 
 
 remote func update_ui() -> void:

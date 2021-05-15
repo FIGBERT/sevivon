@@ -34,6 +34,8 @@ func _client_spun(sender: int) -> void:
 func _spin_dreidel(id: int) -> void:
 	randomize()
 	var spin := int(floor(rand_range(0, 4)))
+	var username: String = State.players.get(id)["name"]
+	rpc("show_spin_alert", spin, username)
 	match(spin):
 		1: # gimmel
 			State.increase_player_gelt(id, State.pot)
