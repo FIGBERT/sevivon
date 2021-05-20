@@ -17,7 +17,7 @@ font_data = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="Sevivon" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.85, 3 )
 
 [node name="Floor" parent="." instance=ExtResource( 1 )]
 
@@ -112,8 +112,10 @@ margin_right = 8.0
 margin_bottom = 8.0
 
 [node name="Result" type="Label" parent="UI/SpinPopup"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 226.0
+margin_bottom = 92.0
 custom_fonts/font = SubResource( 2 )
 text = "Testing"
 align = 1
