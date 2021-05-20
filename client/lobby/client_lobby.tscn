@@ -17,7 +17,7 @@ font_data = ExtResource( 2 )
 script = ExtResource( 3 )
 
 [node name="Sevivon" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.85, 3 )
 
 [node name="Floor" parent="." instance=ExtResource( 1 )]
 
