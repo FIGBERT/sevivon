@@ -27,7 +27,6 @@ func _client_spun(sender: int) -> void:
 		var winner := State.get_winner()
 	else:
 		State.iterate_turn()
-		rpc("set_username_tag", State.players[State.current_turn]["name"])
 		rpc("update_ui")
 
 
