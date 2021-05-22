@@ -34,6 +34,11 @@ sevivon/
 ├─ project.godot
 ```
 
+## Notes
+
+After generating the foreground image for Android, shrink the content
+by 40% (i.e. `height * 0.6`).
+
 ## Contributing
 
 All contributions are welcome!
