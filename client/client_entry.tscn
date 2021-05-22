@@ -1,13 +1,21 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://client/client_entry.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/NotoSansUI.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="DynamicFont" id=1]
-size = 54
+size = 128
 font_data = ExtResource( 2 )
 
-[node name="LoadingScreen" type="Control"]
+[sub_resource type="DynamicFont" id=2]
+size = 64
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 48
+font_data = ExtResource( 2 )
+
+[node name="Root" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
@@ -15,14 +23,63 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Message" type="Label" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_bottom = 0.00012207
+[node name="Title" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.15
+anchor_right = 0.5
+anchor_bottom = 0.15
+margin_left = -230.5
+margin_right = 230.5
+margin_bottom = 175.0
 custom_fonts/font = SubResource( 1 )
-text = "Connecting to server..."
+text = "Sevivon"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Join" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.8
+anchor_right = 0.5
+anchor_bottom = 0.8
+margin_left = -218.5
+margin_top = -120.0
+margin_right = 218.5
+custom_fonts/font = SubResource( 2 )
+text = "Join a Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Popup" type="Panel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -454.5
+margin_top = -86.5
+margin_right = 454.5
+margin_bottom = 86.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Popup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -409.5
+margin_top = -68.5
+margin_right = 409.5
+margin_bottom = 68.5
+custom_fonts/font = SubResource( 3 )
+text = "The connection to the server failed...
+please try again!"
+align = 1
+valign = 1
+
+[connection signal="pressed" from="Join" to="." method="_on_join_pressed"]

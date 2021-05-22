@@ -1,17 +1,19 @@
 extends Control
 
 
-const FAILURE_MESSAGE := "Connection to server failed."
 var safe_area := OS.get_window_safe_area()
-var connection_failed := false
-var dots := 0
 
 
 func _ready() -> void:
 	self.set_margin(MARGIN_TOP, safe_area.position.y)
+
+
+func _on_join_pressed() -> void:
 	Network.initialize_network()
 	get_tree().connect("connected_to_server", self, "_connection_successful")
 	get_tree().connect("connection_failed", self, "_connection_failed")
+	$Join.set_text("Connecting...")
+	$Join.disabled = true
 
 
 func _connection_successful() -> void:
@@ -19,5 +21,8 @@ func _connection_successful() -> void:
 
 
 func _connection_failed() -> void:
-	$Message.text = FAILURE_MESSAGE
-	connection_failed = true
+	$Popup.visible = true
+	yield(get_tree().create_timer(2), "timeout")
+	$Popup.visible = false
+	$Join.set_text("Join a Game")
+	$Join.disabled = false
