@@ -1,9 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://client/components/gameplay/terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://client/components/sevivon/sevivon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://client/match/client_match.gd" type="Script" id=3]
 [ext_resource path="res://assets/fonts/NotoSansUI.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://client/components/sevivon/spin/gimmel.tres" type="Animation" id=5]
+[ext_resource path="res://client/components/sevivon/spin/hey.tres" type="Animation" id=6]
+[ext_resource path="res://client/components/sevivon/spin/shin.tres" type="Animation" id=7]
+[ext_resource path="res://client/components/sevivon/spin/nun.tres" type="Animation" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 42
@@ -17,7 +21,7 @@ font_data = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="Sevivon" parent="." instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.85, 3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.811954, 0 )
 
 [node name="Floor" parent="." instance=ExtResource( 1 )]
 
@@ -120,3 +124,15 @@ custom_fonts/font = SubResource( 2 )
 text = "Testing"
 align = 1
 valign = 1
+
+[node name="Nun" type="AnimationPlayer" parent="."]
+anims/nun = ExtResource( 8 )
+
+[node name="Gimmel" type="AnimationPlayer" parent="."]
+anims/gimmel = ExtResource( 5 )
+
+[node name="Hey" type="AnimationPlayer" parent="."]
+anims/hey = ExtResource( 6 )
+
+[node name="Shin" type="AnimationPlayer" parent="."]
+anims/shin = ExtResource( 7 )
