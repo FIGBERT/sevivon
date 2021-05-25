@@ -125,14 +125,8 @@ text = "Testing"
 align = 1
 valign = 1
 
-[node name="Nun" type="AnimationPlayer" parent="."]
-anims/nun = ExtResource( 8 )
-
-[node name="Gimmel" type="AnimationPlayer" parent="."]
+[node name="Spin" type="AnimationPlayer" parent="."]
 anims/gimmel = ExtResource( 5 )
-
-[node name="Hey" type="AnimationPlayer" parent="."]
 anims/hey = ExtResource( 6 )
-
-[node name="Shin" type="AnimationPlayer" parent="."]
+anims/nun = ExtResource( 8 )
 anims/shin = ExtResource( 7 )
