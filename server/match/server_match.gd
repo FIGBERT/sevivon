@@ -2,6 +2,7 @@ extends Node
 
 
 signal client_anted
+signal spin_finished
 const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
 
 
@@ -11,7 +12,7 @@ func _ready() -> void:
 
 remote func shake_action() -> void:
 	var sender := get_tree().get_rpc_sender_id()
-	if sender == State.current_turn and State.players[sender]["in"] and State.all_players_anted():
+	if sender == State.current_turn and State.players[sender]["in"] and State.all_players_anted() and State.all_spins_finished():
 		_client_spun(sender)
 		rpc_id(sender, "vibrate_device")
 	elif not State.players[sender]["paid_ante"]:
@@ -20,7 +21,7 @@ remote func shake_action() -> void:
 
 
 func _client_spun(sender: int) -> void:
-	_spin_dreidel(sender)
+	yield(_spin_dreidel(sender), "completed")
 	yield(_everyone_puts_in_one(), "completed")
 	var has_won := State.has_a_winner()
 	if has_won:
@@ -35,6 +36,7 @@ func _spin_dreidel(id: int) -> void:
 	var spin := int(floor(rand_range(0, 4)))
 	var username: String = State.players.get(id)["name"]
 	rpc("show_spin_alert", spin, username)
+	yield(_started_spin(), "completed")
 	match(spin):
 		1: # gimmel
 			State.increase_player_gelt(id, State.pot)
@@ -63,3 +65,16 @@ func _everyone_puts_in_one() -> void:
 			State.eliminate_player(id)
 		State.set_player_ante_value(id, true)
 		rpc("update_ui")
+
+
+func _started_spin() -> void:
+	for id in State.players.keys():
+		State.set_player_spin_value(id, false)
+	while not State.all_spins_finished():
+		var id: int = yield(self, "spin_finished")
+		State.set_player_spin_value(id, true)
+
+
+remote func finished_spin() -> void:
+	var sender := get_tree().get_rpc_sender_id()
+	emit_signal("spin_finished", sender)

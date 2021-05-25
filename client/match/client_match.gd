@@ -61,11 +61,16 @@ func _update_indicators() -> void:
 remote func show_spin_alert(spin: int, username: String):
 	var result: String
 	match spin:
-		0: result = "Nun"
-		1: result = "Gimmel"
-		2: result = "Hey"
-		3: result = "Pey/Shin"
-	$UI/SpinPopup/Result.set_text(ALERT_TEMPLATE % [username, result])
+		0: result = "nun"
+		1: result = "gimmel"
+		2: result = "hey"
+		3: result = "shin"
+	$Spin.play(result)
+	yield($Spin, "animation_finished")
+	rpc_id(1, "finished_spin")
+	$Sevivon.set_identity()
+	$Sevivon.global_translate(Vector3(0, 0.812, 0))
+	$UI/SpinPopup/Result.set_text(ALERT_TEMPLATE % [username, result.capitalize()])
 	$UI/SpinPopup.popup_centered()
 	yield(get_tree().create_timer(1), "timeout")
 	$UI/SpinPopup.visible = false

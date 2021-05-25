@@ -18,6 +18,9 @@ const PLAYER_STARTING_GELT := 10
 # in: bool = whether or not the player is in or out.
 # paid_ante: bool = whether or not the player has
 #                   paid all required antes.
+# animated: bool = whether or not the client has
+#                  finished playing the spin
+#                  animation.
 remotesync var players := {}
 remotesync var current_turn := 0
 remotesync var pot := POT_STARTING_GELT
@@ -57,6 +60,12 @@ func set_player_ante_value(id: int, value: bool) -> void:
 	rset("players", _players)
 
 
+func set_player_spin_value(id: int, value: bool) -> void:
+	var _players := players.duplicate(true)
+	_players[id]["animated"] = value
+	rset("players", _players)
+
+
 func increase_player_gelt(id: int, addend: int) -> void:
 	_modify_player_gelt(id, addend)
 
@@ -76,6 +85,13 @@ func all_players_anted() -> bool:
 	var sum := 0
 	for id in players.keys():
 		sum += int(players[id]["paid_ante"])
+	return true if sum == players.size() else false
+
+
+func all_spins_finished() -> bool:
+	var sum := 0
+	for id in players.keys():
+		sum += int(players[id]["animated"])
 	return true if sum == players.size() else false
 
 
@@ -118,6 +134,7 @@ func _create_player(username: String) -> Dictionary:
 		"ready": false,
 		"in": true,
 		"paid_ante": true,
+		"animated": true,
 	}
 
 
