@@ -25,7 +25,8 @@ func _client_spun(sender: int) -> void:
 	yield(_everyone_puts_in_one(), "completed")
 	var has_won := State.has_a_winner()
 	if has_won:
-		var winner := State.get_winner()
+		rpc("game_over", State.get_winner())
+		get_tree().change_scene("res://server/server_lobby.gd")
 	else:
 		State.iterate_turn()
 		rpc("update_ui")

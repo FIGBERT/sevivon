@@ -76,6 +76,15 @@ remote func show_spin_alert(spin: int, username: String):
 	$UI/SpinPopup.visible = false
 
 
+remote func game_over(id: int):
+	var username: String = State.players.get(id).get("name")
+	$UI/SpinPopup/Result.set_text("%s has won the game!\nThanks for playing!" % username)
+	$UI/SpinPopup.popup_centered()
+	yield(get_tree().create_timer(2), "timeout")
+	$UI/SpinPopup.visible = false
+	get_tree().change_scene("res://client/client_entry.tscn")
+
+
 remote func update_ui() -> void:
 	_update_indicators()
 
