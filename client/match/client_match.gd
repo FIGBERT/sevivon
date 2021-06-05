@@ -1,7 +1,6 @@
 extends Spatial
 
 
-const INDICATOR_TEMPLATE = "%s\n%s gelt"
 const ALERT_TEMPLATE = "%s spun:\n%s"
 var ACCEL_THRESHOLD := 3 if OS.get_name() == "iOS" else 30
 var spin_disabled := false
@@ -11,7 +10,6 @@ func _ready() -> void:
 	var safe_area := OS.get_window_safe_area()
 	$UI.set_margin(MARGIN_TOP, safe_area.position.y)
 	_generate_ui()
-	_update_indicators()
 
 
 func _process(delta: float) -> void:
@@ -27,35 +25,46 @@ func _generate_ui() -> void:
 	var keys := State.players.keys()
 	match State.players.size():
 		5:
-			$UI/BottomCenter.name = str(keys[4])
-			continue
+			$UI/BottomLeft.name = str(keys[0])
+			$UI/BottomCenter.name = str(keys[1])
+			$UI/BottomRight.name = str(keys[2])
+			$UI/TopLeft.name = str(keys[3])
+			$UI/TopRight.name = str(keys[4])
 		4:
-			$UI/BottomRight.name = str(keys[3])
-			continue
+			$UI/BottomLeft.name = str(keys[0])
+			$UI/BottomCenter.name = str(keys[1])
+			$UI/BottomRight.name = str(keys[2])
+			$UI/TopCenter.name = str(keys[3])
 		3:
-			$UI/BottomLeft.name = str(keys[2])
-			continue
+			$UI/BottomLeft.name = str(keys[0])
+			$UI/BottomCenter.name = str(keys[1])
+			$UI/BottomRight.name = str(keys[2])
 		2:
-			$UI/TopRight.name = str(keys[1])
-			$UI/TopLeft.name = str(keys[0])
+			$UI/BottomLeft.name = str(keys[0])
+			$UI/BottomRight.name = str(keys[1])
+	for id in keys:
+		var node := get_node("UI/%s" % id)
+		node.set_username(State.players.get(id).get("name"))
+	$UI/Gelt.set_username("Gelt")
+	_update_gelt()
 
 
-func _update_indicators() -> void:
-	$UI/Gelt.set_text(INDICATOR_TEMPLATE % ["Pot", State.pot])
+func _update_gelt() -> void:
+	$UI/Gelt.set_gelt(State.pot)
 	for id in State.players.keys():
 		var node := get_node("UI/%s" % id)
 		var player: Dictionary = State.players.get(id)
 		if not player.get("in"):
-			node.set("custom_colors/font_color", Color.darkgray)
-			node.set_text(INDICATOR_TEMPLATE % [player.get("name"), 0])
+			node.set_color(Color.darkgray)
+			node.set_gelt(0)
 		else:
 			if not player.get("paid_ante"):
-				node.set("custom_colors/font_color", Color.darkred)
+				node.set_color(Color.darkred)
 			elif id == State.current_turn and State.all_players_anted():
-				node.set("custom_colors/font_color", Color.darkgreen)
+				node.set_color(Color.darkgreen)
 			else:
-				node.set("custom_colors/font_color", Color.white)
-			node.set_text(INDICATOR_TEMPLATE % [player.get("name"), player.get("gelt")])
+				node.set_color(Color.white)
+			node.set_gelt(player.get("gelt"))
 
 
 remote func show_spin_alert(spin: int, username: String):
@@ -86,7 +95,7 @@ remote func game_over(id: int):
 
 
 remote func update_ui() -> void:
-	_update_indicators()
+	_update_gelt()
 
 
 remote func vibrate_device() -> void:

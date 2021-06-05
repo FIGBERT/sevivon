@@ -8,12 +8,9 @@
 [ext_resource path="res://client/components/sevivon/spin/hey.tres" type="Animation" id=6]
 [ext_resource path="res://client/components/sevivon/spin/shin.tres" type="Animation" id=7]
 [ext_resource path="res://client/components/sevivon/spin/nun.tres" type="Animation" id=8]
+[ext_resource path="res://client/components/nameplate/nameplate.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
-size = 42
-font_data = ExtResource( 4 )
-
-[sub_resource type="DynamicFont" id=2]
 size = 64
 font_data = ExtResource( 4 )
 
@@ -36,80 +33,64 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Gelt" type="Label" parent="UI"]
-anchor_left = 0.33
-anchor_right = 0.66
-anchor_bottom = 0.075
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 1, 0.85098, 0.0392157, 1 )
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Gelt" parent="UI" instance=ExtResource( 9 )]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -180.0
+margin_top = 72.0
+margin_right = 180.0
+margin_bottom = 216.0
 
-[node name="TopLeft" type="Label" parent="UI"]
-anchor_top = 0.25
-anchor_right = 0.33
-anchor_bottom = 0.325
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="TopLeft" parent="UI" instance=ExtResource( 9 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+margin_left = -360.0
+margin_top = -360.0
+margin_right = 0.0
+margin_bottom = -216.0
 
-[node name="BottomLeft" type="Label" parent="UI"]
-anchor_top = 0.45
-anchor_right = 0.33
-anchor_bottom = 0.525
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="TopCenter" parent="UI" instance=ExtResource( 9 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+margin_left = -180.0
+margin_top = -360.0
+margin_right = 180.0
+margin_bottom = -216.0
 
-[node name="TopRight" type="Label" parent="UI"]
-anchor_left = 0.66
-anchor_top = 0.25
-anchor_right = 1.0
-anchor_bottom = 0.325
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="TopRight" parent="UI" instance=ExtResource( 9 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+margin_top = -360.0
+margin_right = 360.0
+margin_bottom = -216.0
 
-[node name="BottomRight" type="Label" parent="UI"]
-anchor_left = 0.66
-anchor_top = 0.45
-anchor_right = 1.0
-anchor_bottom = 0.525
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="BottomLeft" parent="UI" instance=ExtResource( 9 )]
+anchor_top = 1.0
+anchor_right = 0.0
+margin_top = -216.0
+margin_right = 360.0
+margin_bottom = -72.0
 
-[node name="BottomCenter" type="Label" parent="UI"]
-anchor_left = 0.33
-anchor_top = 0.8
-anchor_right = 0.66
-anchor_bottom = 0.875
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="BottomCenter" parent="UI" instance=ExtResource( 9 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+margin_left = -180.0
+margin_top = -216.0
+margin_right = 180.0
+margin_bottom = -72.0
+
+[node name="BottomRight" parent="UI" instance=ExtResource( 9 )]
+anchor_left = 1.0
+anchor_top = 1.0
+margin_left = -360.0
+margin_top = -216.0
+margin_right = 0.0
+margin_bottom = -72.0
 
 [node name="SpinPopup" type="PopupPanel" parent="UI"]
 margin_right = 8.0
@@ -120,7 +101,7 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = 226.0
 margin_bottom = 92.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "Testing"
 align = 1
 valign = 1
