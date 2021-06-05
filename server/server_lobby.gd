@@ -1,8 +1,17 @@
 extends Node
 
 
+const SERVER_PORT := 1780
+const MAX_PLAYERS := 5
+
+
 func _ready() -> void:
-	Network.initialize_network(true)
+	if get_tree().network_peer != null:
+		get_tree().network_peer.close_connection()
+	State.reset_state()
+	var peer := NetworkedMultiplayerENet.new()
+	peer.create_server(SERVER_PORT, MAX_PLAYERS)
+	get_tree().set_network_peer(peer)
 	get_tree().connect("network_peer_connected", self, "_client_joined_server")
 	get_tree().connect("network_peer_disconnected", self, "_client_left_server")
 
