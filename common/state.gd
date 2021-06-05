@@ -30,9 +30,11 @@ func reset_state() -> void:
 	players = {}
 
 
-func add_player(id: int) -> void:
+func add_player(id: int, username: String) -> void:
 	var _players := players.duplicate(true)
-	_players[id] = _create_player(USERNAMES[players.size()])
+	if username == null or username == "":
+		username = USERNAMES[players.size()]
+	_players[id] = _create_player(username)
 	rset("players", _players)
 
 

@@ -1,6 +1,7 @@
 extends Node
 
 
+signal username_request
 const SERVER_PORT := 1780
 const MAX_PLAYERS := 5
 
@@ -17,8 +18,15 @@ func _ready() -> void:
 
 
 func _client_joined_server(id: int) -> void:
-	State.add_player(id)
-	var username: String = State.players[id]["name"]
+	var username: String
+	var set := false
+	while not set:
+		var out: Array = yield(self, "username_request")
+		var sender: int = out[0]
+		if sender == id:
+			username = out[1]
+			set = true
+	State.add_player(id, username)
 	for peer in State.get_peer_ids(id):
 		rpc_id(peer, "player_joined", username, id)
 
@@ -35,3 +43,8 @@ remote func client_ready(id: int) -> void:
 	if State.players.size() > 1 and State.all_players_ready():
 		rpc("start_match")
 		get_tree().change_scene("res://server/match/server_match.tscn")
+
+
+remote func set_username(username: String) -> void:
+	var id := get_tree().get_rpc_sender_id()
+	emit_signal("username_request", id, username.strip_edges())

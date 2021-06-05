@@ -21,9 +21,11 @@ func _on_join_pressed() -> void:
 	get_tree().connect("connection_failed", self, "_connection_failed")
 	$Join.set_text("Connecting...")
 	$Join.disabled = true
+	$NameEntry.editable = false
 
 
 func _connection_successful() -> void:
+	rpc_id(1, "set_username", $NameEntry.text)
 	get_tree().change_scene("res://client/lobby/client_lobby.tscn")
 
 
@@ -33,3 +35,4 @@ func _connection_failed() -> void:
 	$Popup.visible = false
 	$Join.set_text("Join a Game")
 	$Join.disabled = false
+	$NameEntry.editable = true

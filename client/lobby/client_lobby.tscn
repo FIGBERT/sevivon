@@ -13,7 +13,7 @@ font_data = ExtResource( 5 )
 size = 48
 font_data = ExtResource( 5 )
 
-[node name="Lobby" type="Spatial"]
+[node name="Root" type="Spatial"]
 script = ExtResource( 3 )
 
 [node name="Sevivon" parent="." instance=ExtResource( 4 )]
