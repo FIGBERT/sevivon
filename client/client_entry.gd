@@ -2,7 +2,7 @@ extends Control
 
 
 const SERVER_PORT := 1780
-var SERVER_IP := "135.181.44.54" if OS.has_feature("release") else "10.0.0.76"
+var SERVER_IP := "135.181.44.54" if OS.has_feature("release") else "10.0.0.139"
 var safe_area := OS.get_window_safe_area()
 
 
