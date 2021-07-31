@@ -140,6 +140,18 @@ func _create_player(username: String) -> Dictionary:
 	}
 
 
+func time() -> String:
+	var now: Dictionary = OS.get_datetime(true)
+	return "%04d-%02d-%02dT%02d:%02d:%02d - " % [
+		now.get("year"),
+		now.get("month"),
+		now.get("day"),
+		now.get("hour"),
+		now.get("minute"),
+		now.get("second"),
+	]
+
+
 func _modify_player_gelt(id: int, modifier: int) -> void:
 	var _players := players.duplicate(true)
 	_players[id]["gelt"] += modifier
