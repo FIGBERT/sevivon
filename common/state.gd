@@ -126,6 +126,12 @@ func iterate_turn() -> void:
 	else:
 		index += 1
 	var new_turn: int = players.keys()[index]
+	if get_tree().is_network_server():
+		print("%sTurn changed: %s (%s) -> %s (%s)" % [
+			State.time(),
+			current_turn, players[current_turn]["name"],
+			new_turn, players[new_turn]["name"],
+			])
 	rset("current_turn", new_turn)
 
 
@@ -150,6 +156,15 @@ func time() -> String:
 		now.get("minute"),
 		now.get("second"),
 	]
+
+
+func stringify_dreidel_spin(spin: int) -> String:
+	match(spin):
+		0: return "nun"
+		1: return "gimmel"
+		2: return "hey"
+		3: return "pey/shin"
+		_: return "error"
 
 
 func _modify_player_gelt(id: int, modifier: int) -> void:
