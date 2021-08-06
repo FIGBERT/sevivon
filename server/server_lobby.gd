@@ -12,6 +12,7 @@ func _ready() -> void:
 		get_tree().network_peer.close_connection()
 	State.reset_state()
 	print("%sStarting server..." % State.time())
+	get_tree().set_refuse_network_connections(false)
 	var peer := NetworkedMultiplayerENet.new()
 	peer.create_server(SERVER_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)

@@ -7,6 +7,8 @@ const DREIDEL_FACES := ["nun", "gimmel", "hey", "pey/shin"]
 
 
 func _ready() -> void:
+	get_tree().set_refuse_new_connections(true)
+	get_tree().connect("network_peer_disconnected", self, "_client_left_server")
 	print("%sMatch started" % State.time())
 	State.iterate_turn()
 
@@ -31,7 +33,7 @@ func _client_spun(sender: int) -> void:
 		print("%s%s (%s) has won the game, resetting..." % [
 			State.time(), winner, State.players[winner]["name"]
 			])
-		rpc("game_over", winner)
+		rpc("game_over", State.players[winner]["name"])
 		get_tree().change_scene("res://server/server_lobby.tscn")
 	else:
 		State.iterate_turn()
@@ -94,3 +96,12 @@ func _started_spin() -> void:
 remote func finished_spin() -> void:
 	var sender := get_tree().get_rpc_sender_id()
 	emit_signal("spin_finished", sender)
+
+
+func _client_left_server(id: int) -> void:
+	var username: String = State.players[id]["name"]
+	print("%s%s (%s) disconnected from the server, resetting..." % [State.time(), id, username])
+	State.remove_player(id)
+	rpc("game_over", username, true)
+	yield(get_tree().create_timer(0.5), "timeout")
+	get_tree().change_scene("res://server/server_lobby.tscn")

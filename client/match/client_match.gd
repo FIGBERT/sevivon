@@ -85,9 +85,11 @@ remote func show_spin_alert(spin: int, username: String):
 	$UI/SpinPopup.visible = false
 
 
-remote func game_over(id: int):
-	var username: String = State.players.get(id).get("name")
-	$UI/SpinPopup/Result.set_text("%s has won the game!\nThanks for playing!" % username)
+remote func game_over(username: String, disconnect := false):
+	if !disconnect:
+		$UI/SpinPopup/Result.set_text("%s has won the game!\nThanks for playing!" % username)
+	else:
+		$UI/SpinPopup/Result.set_text("%s has disconnected.\nThanks for playing!" % username)
 	$UI/SpinPopup.popup_centered()
 	yield(get_tree().create_timer(2), "timeout")
 	$UI/SpinPopup.visible = false
