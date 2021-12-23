@@ -77,24 +77,24 @@ func decrease_player_gelt(id: int, minuend: int) -> void:
 
 
 func all_players_ready() -> bool:
-	var sum := 0
 	for id in players.keys():
-		sum += int(players[id]["ready"])
-	return true if sum == players.size() else false
+		if !players[id]["ready"]:
+			return false
+	return true
 
 
 func all_players_anted() -> bool:
-	var sum := 0
 	for id in players.keys():
-		sum += int(players[id]["paid_ante"])
-	return true if sum == players.size() else false
+		if !players[id]["paid_ante"]:
+			return false
+	return true
 
 
 func all_spins_finished() -> bool:
-	var sum := 0
 	for id in players.keys():
-		sum += int(players[id]["animated"])
-	return true if sum == players.size() else false
+		if !players[id]["animated"]:
+			return false
+	return true
 
 
 func has_a_winner() -> bool:
